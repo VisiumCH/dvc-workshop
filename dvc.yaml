@@ -1,0 +1,25 @@
+stages:
+  preprocess:
+    cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
+    deps:
+      - data/raw
+      - dvc_workshop/pipeline/preprocess
+    params:
+      - preprocess
+    outs:
+      - data/preprocessed
+
+  train:
+    cmd: python -m dvc_workshop.pipeline.train.training
+    deps:
+      - data/preprocessed
+      - dvc_workshop/pipeline/train
+    params:
+      - train
+
+  evaluate:
+    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
+    deps:
+      - dvc_workshop/pipeline/evaluate
+    params:
+      - evaluate

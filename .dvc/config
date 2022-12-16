@@ -1,0 +1,6 @@
+[cache]
+    dir = /io/dvc_cache
+    type = symlink
+    shared = group
+['remote "tavern-bucket"']
+    url = gs://visium-tavern-dev.appspot.com/Movies-Poster_Dataset

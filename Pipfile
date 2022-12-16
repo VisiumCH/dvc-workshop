@@ -12,6 +12,11 @@ bottleneck = "*"
 pathlib = "*"
 gcloud = "*"
 typer = "*"
+dvc-gs = "*"
+keras-preprocessing = "*"
+numpy = "*"
+scikit-image = "*"
+pillow = "*"
 
 [dev-packages]
 black = "*"

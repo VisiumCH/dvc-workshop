@@ -1,2 +1,12 @@
 schema: '2.0'
 stages:
+  evaluate:
+    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
+    deps:
+    - path: dvc_workshop/pipeline/evaluate
+      md5: 3735f0c26e6a6974dfd23082a4d7018f.dir
+      size: 86
+      nfiles: 2
+    params:
+      params.yaml:
+        evaluate:

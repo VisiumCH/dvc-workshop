@@ -2,10 +2,12 @@ import numpy as np
 
 
 from dvc_workshop.params import PreprocessParams
-from dvc_workshop.pipeline.preprocess.io import read_images,save_images
+from dvc_workshop.pipeline.preprocess.io import read_images,save_images,generate_dataset
 from dvc_workshop.pipeline.preprocess.constants import (
     SOURCE_DIRECTORY,
-    TARGET_DIRECTORY
+    TARGET_DIRECTORY,
+    PREPROCESS_DIRECTORY,
+    RAW_DIRECTORY
 )
 
 def main() :
@@ -15,6 +17,8 @@ def main() :
     color_filtered = filter(color_detector, images)
     # save result
     save_images(color_filtered,TARGET_DIRECTORY)
+    # generate train, val, test labels 
+    generate_dataset(RAW_DIRECTORY,TARGET_DIRECTORY,PREPROCESS_DIRECTORY)
 
 
 

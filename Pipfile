@@ -19,6 +19,7 @@ scikit-image = "*"
 pillow = "*"
 opencv-python = "*"
 typing = "*"
+iterative-stratification = "*"
 
 [dev-packages]
 black = "*"

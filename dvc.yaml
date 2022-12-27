@@ -5,7 +5,8 @@ stages:
       - data/raw
       - dvc_workshop/pipeline/preprocess
     params:
-      - preprocess
+    - dvc_workshop/params.py:
+      - PreprocessParams
     outs:
       - data/preprocessed
 

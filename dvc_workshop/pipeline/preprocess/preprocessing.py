@@ -1,46 +1,57 @@
-from keras_preprocessing.image import ImageDataGenerator, array_to_img,img_to_array, load_img
-from skimage import io 
 import numpy as np
-from PIL import Image
-import os,glob
+
+
+from dvc_workshop.params import PreprocessParams
+from dvc_workshop.pipeline.preprocess.io import read_images,save_images
+from dvc_workshop.pipeline.preprocess.constants import (
+    SOURCE_DIRECTORY,
+    TARGET_DIRECTORY
+)
 
 def main() :
-    datagen = ImageDataGenerator(        
-        rotation_range = 40,
-        shear_range = 0.2,
-        zoom_range = 0.2,
-        horizontal_flip = True,
-        brightness_range = (0.5, 1.5))
+    # read image data
+    images = read_images(SOURCE_DIRECTORY)
+    # filter on color content 
+    color_filtered = filter(color_detector, images)
+    # save result
+    save_images(color_filtered,TARGET_DIRECTORY)
 
-    image_directory = r'data/raw/Images'
-    target_directory =r'data/processed/Images'
-    SIZE = 256
-    dataset = []
-    my_images  = glob.glob(image_directory + "/**/*.jpg",recursive=True)
 
-    target_exist = os.path.exists(target_directory)
-    if not target_exist:
-        # Create a new directory because it does not exist
-        os.makedirs(target_directory)
 
-    for img in my_images:
-        if "DS_Store" in img: continue
-        src_fname, ext = os.path.splitext(img) 
-    
 
-        img = load_img(img)
+def color_detector(image_path: str) -> bool :
+    """Detects if poster image contains pixel content of given color above threshold
 
-        x = img_to_array(img)
-        x = x.reshape((1,) + x.shape)
+    Args:
+        image_path (str): path to image
 
-        img_name = src_fname.split('/')[-1]
+    Returns:
+        bool: colored pixel proportion against threshold
+    """
+    import cv2
+    # read image
+    image = cv2.imread(image_path)
+    # lower bound for red color 
+    lower_red = np.array(PreprocessParams.LOWER_BOUND_COLOR, dtype = "uint8")
+    # upper bound for red color 
+    upper_red= np.array(PreprocessParams.UPPER_BOUND_COLOR, dtype = "uint8")
+    # detect pixels in red range 
+    mask = cv2.inRange(image, lower_red, upper_red)
+    # keep pixels in the range 
+    detected_output = cv2.bitwise_and(image, image, mask =  mask) 
+    # sum total number of red pixels 
+    sum_red = np.sum(detected_output, axis=2)
+    # count non zeros 
+    red_pixel = np.count_nonzero(sum_red)
+    # get total number of pixel 
+    total_pixels = detected_output.size 
+    # get proportion of detected pixel
+    amount_detected = np.round(red_pixel / total_pixels,5)
+    # return bool comparison with threshold
+    return amount_detected < PreprocessParams.THRESHOLD
 
-        i = 0
-        for batch in datagen.flow (x, batch_size=1, save_to_dir = target_directory, 
-                                save_prefix = img_name, save_format='jpg'):
-            i+=1
-            if i>3:
-                break
+
 
 if __name__ == "__main__":
     main()
+

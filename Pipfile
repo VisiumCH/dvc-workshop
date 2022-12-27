@@ -17,6 +17,8 @@ keras-preprocessing = "*"
 numpy = "*"
 scikit-image = "*"
 pillow = "*"
+opencv-python = "*"
+typing = "*"
 
 [dev-packages]
 black = "*"

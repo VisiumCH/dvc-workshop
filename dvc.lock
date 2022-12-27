@@ -10,3 +10,45 @@ stages:
     params:
       params.yaml:
         evaluate:
+  preprocess:
+    cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
+    deps:
+    - path: data/raw
+      md5: c41654af7d89016d46ced4b188fa5b5f.dir
+      size: 259792954
+      nfiles: 7868
+    - path: dvc_workshop/pipeline/preprocess
+      md5: b5b68d5239ed205b36e57902fdf9b69c.dir
+      size: 2774
+      nfiles: 4
+    params:
+      dvc_workshop/params.py:
+        PreprocessParams:
+          LOWER_BOUND_COLOR:
+          - 0
+          - 0
+          - 200
+          UPPER_BOUND_COLOR:
+          - 0
+          - 0
+          - 255
+          THRESHOLD: 0.005
+    outs:
+    - path: data/preprocessed
+      md5: 4cbcae887d974fc6042f3be13adba4b7.dir
+      size: 258664124
+      nfiles: 7852
+  train:
+    cmd: python -m dvc_workshop.pipeline.train.training
+    deps:
+    - path: data/preprocessed
+      md5: 4cbcae887d974fc6042f3be13adba4b7.dir
+      size: 258664124
+      nfiles: 7852
+    - path: dvc_workshop/pipeline/train
+      md5: f3e9ea8ba4ff1ef81cdffc7b5b92cb01.dir
+      size: 84
+      nfiles: 2
+    params:
+      params.yaml:
+        train:

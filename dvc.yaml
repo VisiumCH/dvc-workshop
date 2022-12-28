@@ -17,6 +17,8 @@ stages:
       - dvc_workshop/pipeline/train
     params:
       - train
+    outs: 
+      - models/
 
   evaluate:
     cmd: python -m dvc_workshop.pipeline.evaluate.evaluation

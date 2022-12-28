@@ -1,11 +1,13 @@
 """perform stratification on data frame with labels and paths"""
-import pandas as pd
 import numpy as np
+import pandas as pd
 from iterstrat.ml_stratifiers import MultilabelStratifiedShuffleSplit
 from sklearn.preprocessing import MultiLabelBinarizer
 
-def handle_no_classes_in_test_and_valid_after_stratification(train: pd.DataFrame, test: pd.DataFrame, valid: pd.DataFrame, mlb: any) -> tuple([pd.DataFrame,pd.DataFrame,pd.DataFrame]):
 
+def handle_no_classes_in_test_and_valid_after_stratification(
+    train: pd.DataFrame, test: pd.DataFrame, valid: pd.DataFrame, mlb: any
+) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
     word_to_remove = None
     for i in [valid, test, train]:
         results = ~np.all(mlb.transform(i["Labels"]) == 0, axis=0)
@@ -18,14 +20,14 @@ def handle_no_classes_in_test_and_valid_after_stratification(train: pd.DataFrame
     test["Labels"] = test["Labels"].apply(search_for_word)
     train["Labels"] = train["Labels"].apply(search_for_word)
 
-    #Check for equal size
+    # Check for equal size
     assert (
         mlb.transform(test["Labels"]).shape[1]
         == mlb.transform(train["Labels"]).shape[1]
         == mlb.transform(valid["Labels"]).shape[1]
     )
 
-    return train, valid , test
+    return train, valid, test
 
 
 def perform_stratification(
@@ -43,17 +45,13 @@ def perform_stratification(
 
     mlb = MultiLabelBinarizer()
     mlb_transformed_labels = mlb.fit_transform(data_df["Labels"].values)
-    
+
     train = None
     test = None
     valid = None
     ##Iterative Stratification
-    msss = MultilabelStratifiedShuffleSplit(
-        n_splits=10, test_size=test_size, random_state=random_state
-    )
-    for train_index, test_index in msss.split(
-        data_df["Paths"].values, mlb_transformed_labels
-    ):
+    msss = MultilabelStratifiedShuffleSplit(n_splits=10, test_size=test_size, random_state=random_state)
+    for train_index, test_index in msss.split(data_df["Paths"].values, mlb_transformed_labels):
         train, test = (
             data_df.iloc[train_index],
             data_df.iloc[test_index],
@@ -78,5 +76,5 @@ def perform_stratification(
             continue
 
     train, test, valid = handle_no_classes_in_test_and_valid_after_stratification(train, test, valid, mlb)
-    
+
     return train, test, valid

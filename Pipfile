@@ -20,6 +20,7 @@ pillow = "*"
 opencv-python = "*"
 typing = "*"
 iterative-stratification = "*"
+tensorflow = "*"
 
 [dev-packages]
 black = "*"

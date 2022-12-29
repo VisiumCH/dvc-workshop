@@ -6,8 +6,8 @@ import tensorflow as tf
 from dvc_workshop.models.efficientnet import EfficentNet
 from dvc_workshop.params import ModelParams, TrainingParams
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
-from dvc_workshop.pipeline.train.constants import SAVE_MODEL,MODEL_NAME, TRAIN_HISTORY,TUNE_HISTORY
-from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_model, save_history
+from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
+from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_history, save_model
 
 
 def train_model(
@@ -86,11 +86,11 @@ def train_model(
         callbacks=[tf.keras.callbacks.EarlyStopping(patience=TrainingParams.PATIENCE, restore_best_weights=True)],
     )
 
-"""    
+"""
 
     save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
-    save_history(train_history.history,SAVE_MODEL,TRAIN_HISTORY)
-   # save_history(tune_history.history,SAVE_MODEL,TUNE_HISTORY)
+    save_history(train_history.history, SAVE_MODEL, TRAIN_HISTORY)
+    # save_history(tune_history.history,SAVE_MODEL,TUNE_HISTORY)
 
     return model
 

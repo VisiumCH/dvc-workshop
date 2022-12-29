@@ -16,8 +16,10 @@ stages:
       - data/preprocessed
       - dvc_workshop/pipeline/train
     params:
-      - train
-    outs: 
+      - dvc_workshop/params.py:
+        - ModelParams
+        - TrainingParams
+    outs:
       - models/
 
   evaluate:
@@ -26,3 +28,5 @@ stages:
       - dvc_workshop/pipeline/evaluate
     params:
       - evaluate
+    outs:
+      - results/metrics

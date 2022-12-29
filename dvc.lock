@@ -4,12 +4,17 @@ stages:
     cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
     deps:
     - path: dvc_workshop/pipeline/evaluate
-      md5: ac7de861437fcbb5a57383e4702fc3bf.dir
-      size: 87
-      nfiles: 2
+      md5: 8858daac1f6c43119a2110f7d1bb0aaf.dir
+      size: 1562
+      nfiles: 4
     params:
       params.yaml:
         evaluate:
+    outs:
+    - path: results/metrics
+      md5: a61c079906e9c676369883d7141bcf28.dir
+      size: 142
+      nfiles: 1
   preprocess:
     cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
     deps:
@@ -18,8 +23,8 @@ stages:
       size: 259792954
       nfiles: 7868
     - path: dvc_workshop/pipeline/preprocess
-      md5: 2300d55fc32168967196e5fc5a4f12c3.dir
-      size: 7089
+      md5: ae45ce1f39d6bc4d947710a1111d5018.dir
+      size: 7091
       nfiles: 5
     params:
       dvc_workshop/params.py:
@@ -42,13 +47,32 @@ stages:
     cmd: python -m dvc_workshop.pipeline.train.training
     deps:
     - path: data/preprocessed
-      md5: 0ca899bd490882ea4b1758bf572a9f2b.dir
-      size: 259134169
+      md5: e8f2770219e6203b8dc7da337f9207c4.dir
+      size: 259141423
       nfiles: 7855
     - path: dvc_workshop/pipeline/train
-      md5: f3e9ea8ba4ff1ef81cdffc7b5b92cb01.dir
-      size: 84
-      nfiles: 2
+      md5: c4de9b32e678e664df2fe05b23b526ab.dir
+      size: 6085
+      nfiles: 4
     params:
-      params.yaml:
-        train:
+      dvc_workshop/params.py:
+        ModelParams:
+          IMAGE_HEIGHT: 256
+          IMAGE_WIDTH: 256
+          NUMBER_CHANNELS: 3
+          POOLING: max
+          ACTIVATION: sigmoid
+          TOP: false
+        TrainingParams:
+          BACTH_SIZE: 32
+          SEED: 42
+          TRAINING_EPOCHS: 1
+          TRAINING_LR: 0.001
+          TUNING_EPOCHS: 1
+          TUNING_LR: 1e-05
+          PATIENCE: 5
+    outs:
+    - path: models/
+      md5: 168cf252839b0fcaabc92d82ac0fa1e5.dir
+      size: 31256822
+      nfiles: 6

@@ -1,10 +1,11 @@
 """Module for loading images and labels from csv file."""
 import ast
 import os
-
+from typing import Dict
 import pandas as pd
 import tensorflow as tf
 from keras_preprocessing.image import ImageDataGenerator
+from dvc_workshop.params import TrainingParams
 
 
 def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: str) -> ImageDataGenerator():
@@ -32,8 +33,8 @@ def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: st
         dataframe=path_label_df,
         x_col=paths_columns,
         y_col=labels_columns,
-        batch_size=32,
-        seed=42,
+        batch_size=TrainingParams.BACTH_SIZE,
+        seed=TrainingParams.SEED,
         shuffle=True,
         class_mode="categorical",
         classes=classes,
@@ -41,7 +42,7 @@ def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: st
     return generator
 
 
-def save_model(save_path: str, model: tf.keras.Model):
+def save_model(model: tf.keras.Model,save_path: str ):
     # SAVE MODE TO A FILE
 
     if not os.path.exists(save_path):
@@ -51,3 +52,9 @@ def save_model(save_path: str, model: tf.keras.Model):
 
     # # save the model
     model.save(f"{save_path}")
+
+def save_history(history : Dict,save_path: str, title : str): 
+    hist_df = pd.DataFrame(history) 
+    hist_csv_file = os.path.join(save_path,title)
+    with open(hist_csv_file, mode='w') as f:
+        hist_df.to_csv(f) 

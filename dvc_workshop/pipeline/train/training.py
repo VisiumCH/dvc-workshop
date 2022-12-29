@@ -4,10 +4,10 @@ import os
 import tensorflow as tf
 
 from dvc_workshop.models.efficientnet import EfficentNet
-from dvc_workshop.params import ModelParams
+from dvc_workshop.params import ModelParams, TrainingParams
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
-from dvc_workshop.pipeline.train.constants import SAVE_MODEL
-from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_model
+from dvc_workshop.pipeline.train.constants import SAVE_MODEL,MODEL_NAME, TRAIN_HISTORY,TUNE_HISTORY
+from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_model, save_history
 
 
 def train_model(
@@ -40,8 +40,6 @@ def train_model(
     # GENERATE TRAIN AND VALIDATION DATAGENERATOR FROM COLUMNS
     train = csv_to_image_data_gen(csv_train_path, image_path, target)
     val = csv_to_image_data_gen(csv_valid_path, image_path, target)
-    test = csv_to_image_data_gen(csv_test_path, image_path, target)
-    print(csv_valid_path)
     model = EfficentNet(
         ModelParams.IMAGE_HEIGHT,
         ModelParams.IMAGE_WIDTH,
@@ -53,7 +51,7 @@ def train_model(
     )
 
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(),
+        optimizer=tf.keras.optimizers.Adam(TrainingParams.TRAINING_LR),
         loss=tf.keras.losses.BinaryCrossentropy(),
         metrics=[
             tf.keras.metrics.Precision(),
@@ -62,17 +60,18 @@ def train_model(
         ],
     )
     # train the output layer
-    model.fit(
+    train_history = model.fit(
         train,
         validation_data=val,
-        epochs=1,
+        epochs=TrainingParams.TRAINING_EPOCHS,
         callbacks=[tf.keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)],
     )
+    """
     # fine-tune the model
     model.set_trainable()
 
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(1e-5),
+        optimizer=tf.keras.optimizers.Adam(TrainingParams.TUNING_LR),
         loss=tf.keras.losses.BinaryCrossentropy(),
         metrics=[
             tf.keras.metrics.Precision(),
@@ -80,25 +79,26 @@ def train_model(
             tf.keras.metrics.BinaryAccuracy(),
         ],
     )
-    model.fit(
+    tune_history = model.fit(
         train,
         validation_data=val,
-        epochs=1,
-        callbacks=[tf.keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)],
+        epochs=TrainingParams.TUNING_EPOCHS,
+        callbacks=[tf.keras.callbacks.EarlyStopping(patience=TrainingParams.PATIENCE, restore_best_weights=True)],
     )
 
-    results_dict = model.evaluate(test, verbose=0, return_dict=True)
-    print(results_dict)
+"""    
 
-    save_model(SAVE_MODEL, model)
+    save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
+    save_history(train_history.history,SAVE_MODEL,TRAIN_HISTORY)
+   # save_history(tune_history.history,SAVE_MODEL,TUNE_HISTORY)
 
-    return model, results_dict
+    return model
 
 
 def main():
-    model, results_dict = train_model(
-        image_height=256,
-        image_width=256,
+    model = train_model(
+        image_height=ModelParams.IMAGE_HEIGHT,
+        image_width=ModelParams.IMAGE_WIDTH,
         csv_train_path=os.path.join(PREPROCESS_DIRECTORY, "train.csv"),
         csv_valid_path=os.path.join(PREPROCESS_DIRECTORY, "valid.csv"),
         csv_test_path=os.path.join(PREPROCESS_DIRECTORY, "test.csv"),

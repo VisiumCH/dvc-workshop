@@ -1,2 +1,3 @@
-SAVE_TRAIN_PLOT = "results/train_plot.jpeg"
-SAVE_TUNE_PLOT = "results/tune_plot.jpeg"
+SAVE_PLOT = "results/plots"
+TRAIN_PLOT = "train_plot.jpeg"
+TUNE_PLOT = "tune_plot.jpeg"

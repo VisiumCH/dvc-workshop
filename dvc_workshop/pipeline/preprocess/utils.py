@@ -1,4 +1,6 @@
 """perform stratification on data frame with labels and paths"""
+import os
+
 import numpy as np
 import pandas as pd
 from iterstrat.ml_stratifiers import MultilabelStratifiedShuffleSplit
@@ -78,3 +80,11 @@ def perform_stratification(
     train, test, valid = handle_no_classes_in_test_and_valid_after_stratification(train, test, valid, mlb)
 
     return train, test, valid
+
+
+def create_path(target_directory: str):
+    # check if directory exists
+    target_exist = os.path.exists(target_directory)
+    if not target_exist:
+        # Create a new directory because it does not exist
+        os.makedirs(target_directory)

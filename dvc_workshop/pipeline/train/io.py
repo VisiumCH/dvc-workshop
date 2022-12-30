@@ -8,6 +8,7 @@ import tensorflow as tf
 from keras_preprocessing.image import ImageDataGenerator
 
 from dvc_workshop.params import TrainingParams
+from dvc_workshop.pipeline.preprocess.utils import create_path
 
 
 def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: str) -> ImageDataGenerator():
@@ -45,13 +46,7 @@ def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: st
 
 
 def save_model(model: tf.keras.Model, save_path: str):
-    # SAVE MODE TO A FILE
-
-    if not os.path.exists(save_path):
-        #  Create a new directory because it does not exist
-        os.makedirs(save_path)
-        print("The new directory has been created!")
-
+    create_path(save_path)
     # # save the model
     model.save(f"{save_path}")
 

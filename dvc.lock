@@ -1,20 +1,5 @@
 schema: '2.0'
 stages:
-  evaluate:
-    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
-    deps:
-    - path: dvc_workshop/pipeline/evaluate
-      md5: 8858daac1f6c43119a2110f7d1bb0aaf.dir
-      size: 1562
-      nfiles: 4
-    params:
-      params.yaml:
-        evaluate:
-    outs:
-    - path: results/metrics
-      md5: a61c079906e9c676369883d7141bcf28.dir
-      size: 142
-      nfiles: 1
   preprocess:
     cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
     deps:
@@ -23,8 +8,8 @@ stages:
       size: 259792954
       nfiles: 7868
     - path: dvc_workshop/pipeline/preprocess
-      md5: ae45ce1f39d6bc4d947710a1111d5018.dir
-      size: 7091
+      md5: 68c07bb2ba569b6630baaa297e3af712.dir
+      size: 7351
       nfiles: 5
     params:
       dvc_workshop/params.py:
@@ -51,8 +36,8 @@ stages:
       size: 259141423
       nfiles: 7855
     - path: dvc_workshop/pipeline/train
-      md5: c4de9b32e678e664df2fe05b23b526ab.dir
-      size: 6085
+      md5: c68fc65dbc47177a7d0c9adeced5ad38.dir
+      size: 5968
       nfiles: 4
     params:
       dvc_workshop/params.py:
@@ -66,13 +51,48 @@ stages:
         TrainingParams:
           BACTH_SIZE: 32
           SEED: 42
-          TRAINING_EPOCHS: 1
+          TRAINING_EPOCHS: 5
           TRAINING_LR: 0.001
           TUNING_EPOCHS: 1
           TUNING_LR: 1e-05
           PATIENCE: 5
     outs:
     - path: models/
-      md5: 168cf252839b0fcaabc92d82ac0fa1e5.dir
-      size: 31256822
+      md5: efe29d5e75bc5f6031c6ceeb12036663.dir
+      size: 31257447
       nfiles: 6
+  evaluate:
+    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
+    deps:
+    - path: data/preprocessed
+      md5: e8f2770219e6203b8dc7da337f9207c4.dir
+      size: 259141423
+      nfiles: 7855
+    - path: dvc_workshop/pipeline/evaluate/
+      md5: 42446b2deea2ca792bc792961c0a9aca.dir
+      size: 1628
+      nfiles: 4
+    - path: models/
+      md5: efe29d5e75bc5f6031c6ceeb12036663.dir
+      size: 31257447
+      nfiles: 6
+    outs:
+    - path: results/metrics
+      md5: 74a4ff60a7cb8fc10935735a326b8a91.dir
+      size: 142
+      nfiles: 1
+  plot:
+    cmd: python -m dvc_workshop.pipeline.plot.ploting
+    deps:
+    - path: dvc_workshop/pipeline/plot
+      md5: 069aa40a557e59b222c88264a6ea9561.dir
+      size: 1259
+      nfiles: 4
+    - path: models/train_history.csv
+      md5: 782a008c4142c94536d8439e59416175
+      size: 875
+    outs:
+    - path: results/plots
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0

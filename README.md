@@ -3,10 +3,10 @@
 This repository features a code along workshop showcasing Visium's way of using DVC.
 
 By the end of this workshop you will have learned how to : 
-    - set up remote bucket for data versioning with DVC
-    - pull and push data with DVC
-    - set up DVC a pipeline
-    - create DVC stage
+  - set up remote bucket for data versioning with DVC
+  - pull and push data with DVC
+  - set up DVC a pipeline
+  - create DVC stage
 
 DVC architecture in the repo will also be tackled.
 

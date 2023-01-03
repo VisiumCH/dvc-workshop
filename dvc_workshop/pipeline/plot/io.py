@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from visplotlib.pyplot import mpl, plt
 
@@ -10,4 +12,5 @@ def read_history(read_path: str):
 
 def save_plot(fig: plt.Axes, save_path: str, file_name: str):
     create_path(save_path)
-    fig.savefig(save_path)
+    fig.savefig(os.path.join(save_path, file_name))
+    plt.close(fig)

@@ -2,7 +2,7 @@ import ast
 import glob
 import os
 import shutil
-from typing import Iterable, List
+from typing import Dict, Iterable, List
 
 import numpy as np
 import numpy.typing as npt
@@ -10,7 +10,7 @@ import pandas as pd
 from git import Repo
 from PIL import Image
 
-from dvc_workshop.pipeline.preprocess.utils import perform_stratification
+from dvc_workshop.pipeline.preprocess.utils import create_path, perform_stratification
 
 
 def read_images(source_directory: str) -> List[str]:
@@ -32,11 +32,8 @@ def save_images(images: Iterable[str], target_directory: str):
         images (Iterable[str]): Image paths
         target_directory (str): Destination directory
     """
-    # check if directory exists
-    target_exist = os.path.exists(target_directory)
-    if not target_exist:
-        # Create a new directory because it does not exist
-        os.makedirs(target_directory)
+    create_path(target_directory)
+
     # copy selected images
     for img in images:
         if not os.path.isfile(os.path.join(target_directory, img)):

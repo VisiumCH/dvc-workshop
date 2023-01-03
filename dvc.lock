@@ -8,8 +8,8 @@ stages:
       size: 259792954
       nfiles: 7868
     - path: dvc_workshop/pipeline/preprocess
-      md5: 68c07bb2ba569b6630baaa297e3af712.dir
-      size: 7351
+      md5: 5ce4b2b025b6bcff4360c277335be487.dir
+      size: 7322
       nfiles: 5
     params:
       dvc_workshop/params.py:
@@ -36,8 +36,8 @@ stages:
       size: 259141423
       nfiles: 7855
     - path: dvc_workshop/pipeline/train
-      md5: c68fc65dbc47177a7d0c9adeced5ad38.dir
-      size: 5968
+      md5: 03cfcd1caff2ca70170f20309a0a8425.dir
+      size: 5862
       nfiles: 4
     params:
       dvc_workshop/params.py:
@@ -51,16 +51,16 @@ stages:
         TrainingParams:
           BACTH_SIZE: 32
           SEED: 42
-          TRAINING_EPOCHS: 5
+          TRAINING_EPOCHS: 3
           TRAINING_LR: 0.001
           TUNING_EPOCHS: 1
           TUNING_LR: 1e-05
           PATIENCE: 5
     outs:
     - path: models/
-      md5: efe29d5e75bc5f6031c6ceeb12036663.dir
-      size: 31257447
-      nfiles: 6
+      md5: a51bb3a5fe302367399feebe6fef40c5.dir
+      size: 79061748
+      nfiles: 7
   evaluate:
     cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
     deps:
@@ -69,30 +69,30 @@ stages:
       size: 259141423
       nfiles: 7855
     - path: dvc_workshop/pipeline/evaluate/
-      md5: 42446b2deea2ca792bc792961c0a9aca.dir
+      md5: cc4d64a5af1865b4c046aa9af907b626.dir
       size: 1628
       nfiles: 4
     - path: models/
-      md5: efe29d5e75bc5f6031c6ceeb12036663.dir
-      size: 31257447
-      nfiles: 6
+      md5: a51bb3a5fe302367399feebe6fef40c5.dir
+      size: 79061748
+      nfiles: 7
     outs:
     - path: results/metrics
-      md5: 74a4ff60a7cb8fc10935735a326b8a91.dir
-      size: 142
+      md5: d7fe74d5174c16095e7202840b8ba49f.dir
+      size: 146
       nfiles: 1
   plot:
     cmd: python -m dvc_workshop.pipeline.plot.ploting
     deps:
     - path: dvc_workshop/pipeline/plot
-      md5: 069aa40a557e59b222c88264a6ea9561.dir
-      size: 1259
+      md5: 4a3ac3d6576586dd55f5864a0a8c5877.dir
+      size: 2165
       nfiles: 4
     - path: models/train_history.csv
-      md5: 782a008c4142c94536d8439e59416175
-      size: 875
+      md5: 6ccb0dfe7d82b31c7083276ec3a41247
+      size: 559
     outs:
     - path: results/plots
-      md5: d751713988987e9331980363e24189ce.dir
-      size: 0
-      nfiles: 0
+      md5: 6e1d5b972e4445e45f6ba6e6b6c6b70f.dir
+      size: 57176
+      nfiles: 2

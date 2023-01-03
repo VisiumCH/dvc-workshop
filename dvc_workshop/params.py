@@ -16,7 +16,7 @@ class ModelParams:
 class TrainingParams:
     BACTH_SIZE = 32
     SEED = 42
-    TRAINING_EPOCHS = 5
+    TRAINING_EPOCHS = 3
     TRAINING_LR = 1e-3
     TUNING_EPOCHS = 1
     TUNING_LR = 1e-5

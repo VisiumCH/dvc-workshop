@@ -15,7 +15,6 @@ def train_model(
     image_width: int,
     csv_train_path: str,
     csv_valid_path: str,
-    csv_test_path: str,
     image_path: str,
     target: str,
 ) -> tuple[tf.keras.Model, dict]:
@@ -66,7 +65,7 @@ def train_model(
         epochs=TrainingParams.TRAINING_EPOCHS,
         callbacks=[tf.keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)],
     )
-    """
+
     # fine-tune the model
     model.set_trainable()
 
@@ -86,11 +85,9 @@ def train_model(
         callbacks=[tf.keras.callbacks.EarlyStopping(patience=TrainingParams.PATIENCE, restore_best_weights=True)],
     )
 
-"""
-
     save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
     save_history(train_history.history, SAVE_MODEL, TRAIN_HISTORY)
-    # save_history(tune_history.history,SAVE_MODEL,TUNE_HISTORY)
+    save_history(tune_history.history, SAVE_MODEL, TUNE_HISTORY)
 
     return model
 
@@ -101,7 +98,6 @@ def main():
         image_width=ModelParams.IMAGE_WIDTH,
         csv_train_path=os.path.join(PREPROCESS_DIRECTORY, "train.csv"),
         csv_valid_path=os.path.join(PREPROCESS_DIRECTORY, "valid.csv"),
-        csv_test_path=os.path.join(PREPROCESS_DIRECTORY, "test.csv"),
         image_path="Paths",
         target="Labels",
     )

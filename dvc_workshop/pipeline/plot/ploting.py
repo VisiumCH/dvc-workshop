@@ -1,27 +1,38 @@
 import os
+from typing import List
 
 import pandas as pd
 import visplotlib as vpl
-from visplotlib.pyplot import mpl, plt
+from visplotlib.pyplot import VISIUM_CLASSIC, VISIUM_DARK, mpl, plt
 from visplotlib.seaborn import sns
 
-from dvc_workshop.pipeline.plot.constants import SAVE_PLOT, TRAIN_PLOT, TUNE_PLOT
+from dvc_workshop.pipeline.plot.constants import METRICS, PLOT_LABELS, SAVE_PLOT, TITLES, TRAIN_PLOT, TUNE_PLOT
 from dvc_workshop.pipeline.plot.io import read_history, save_plot
-from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY
+from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
 
 
 def main():
     train_history = read_history(os.path.join(SAVE_MODEL, TRAIN_HISTORY))
-    # tune_history = read_history(os.path.join(SAVE_MODEL, SAVE_TUNE_PLOT))
-    train_plot = plot_history(train_history)
-    # tune_plot = plot_history(tune_history)
+    train_plot = plot_history(train_history, METRICS, TITLES, PLOT_LABELS, True)
     save_plot(train_plot, SAVE_PLOT, TRAIN_PLOT)
-    # save_plot(tune_plot,SAVE_PLOT, TUNE_PLOT)
+
+    tune_history = read_history(os.path.join(SAVE_MODEL, TUNE_HISTORY))
+    tune_plot = plot_history(tune_history, METRICS, TITLES, PLOT_LABELS, False)
+    save_plot(tune_plot, SAVE_PLOT, TUNE_PLOT)
 
 
-def plot_history(history: pd.DataFrame):
-    plot = sns.lineplot(data=history.iloc[:, 1:])
-    return plot.get_figure()
+def plot_history(history: pd.DataFrame, cols: List[str], titles: List[str], labels: List[str], training: bool = True):
+    print(history)
+    fit = "Training" if training else "Tuning"
+
+    g = sns.lineplot(data=history[cols])
+
+    g.set_title(f"{fit} " + " and ".join(titles))
+    g.set(xlabel="epochs", ylabel="metrics")
+    # Remove the normal legend and create a horizontal one on top
+    g.legend(loc="upper left", bbox_to_anchor=(1.05, 1), labels=labels, fontsize="10")
+    plt.format()
+    return g.get_figure()
 
 
 if __name__ == "__main__":

@@ -22,13 +22,6 @@ stages:
     outs:
     - models/
 
-  plot:
-    cmd: python -m dvc_workshop.pipeline.plot.ploting
-    deps:
-    - dvc_workshop/pipeline/plot
-    - models/train_history.csv
-    outs:
-    - results/plots
   evaluate:
     cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
     deps:
@@ -37,3 +30,10 @@ stages:
     - models/
     outs:
     - results/metrics
+  plot:
+    cmd: python -m dvc_workshop.pipeline.plot.ploting
+    deps:
+    - dvc_workshop/pipeline/plot
+    - models/train_history.csv
+    outs:
+    - results/plots

@@ -21,16 +21,32 @@ def main():
     save_plot(tune_plot, SAVE_PLOT, TUNE_PLOT)
 
 
-def plot_history(history: pd.DataFrame, cols: List[str], titles: List[str], labels: List[str], training: bool = True):
-    print(history)
+def plot_history(
+    history: pd.DataFrame, metrics: List[str], titles: List[str], labels: List[str], training: bool = True
+):
+    """plot training and tuning history
+
+    Args:
+        history (pd.DataFrame): Training history
+        metrics (List[str]): metrics to plot
+        titles (List[str]): plot titles
+        labels (List[str]): metric label
+        training (bool, optional): wether training or tuning history is plot. Defaults to True.
+
+    Returns:
+        _type_: _description_
+    """
+    # get plot type
     fit = "Training" if training else "Tuning"
-
-    g = sns.lineplot(data=history[cols])
-
+    # plot history
+    g = sns.lineplot(data=history[metrics])
+    # set plot title
     g.set_title(f"{fit} " + " and ".join(titles))
+    # set axis labels
     g.set(xlabel="epochs", ylabel="metrics")
     # Remove the normal legend and create a horizontal one on top
     g.legend(loc="upper left", bbox_to_anchor=(1.05, 1), labels=labels, fontsize="10")
+    # format plot visium way
     plt.format()
     return g.get_figure()
 

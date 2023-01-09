@@ -83,6 +83,11 @@ def perform_stratification(
 
 
 def create_path(target_directory: str):
+    """create save path
+
+    Args:
+        target_directory (str): directory path
+    """
     # check if directory exists
     target_exist = os.path.exists(target_directory)
     if not target_exist:

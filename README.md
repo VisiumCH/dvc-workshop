@@ -127,8 +127,9 @@ This command generates hashes for each file, as snapshot of the file version. La
 To store hashes in the remote, one runs:
 
 ```
-dvc push
+dvc push <target_location>
 ```
+The outputs of dvc stages can for instance be seamlessly pushed to remote with this command. 
 
 ## 3. DVC Pipeline
 

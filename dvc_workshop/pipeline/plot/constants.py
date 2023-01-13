@@ -1,6 +1,6 @@
 ################ Ploting constants #######################
 # plots directory
-SAVE_PLOT = "results/plots"
+SAVE_PLOT = "data/plot"
 # train plot file name
 TRAIN_PLOT = "train_plot.jpeg"
 # tune plot filename

@@ -52,6 +52,8 @@ def generate_dataset(source_file: str, images_directory: str, target_directory: 
     path_labels_df.columns = ["Paths", "Labels"]
     path_labels_df["Paths"] = images_directory + "/" + path_labels_df["Paths"] + ".jpg"
 
+    path_labels_df = path_labels_df.sample(n=1000)
+
     train, test, valid = perform_stratification(path_labels_df, 0.3, 0.8, 1)
     train.to_csv(os.path.join(target_directory, "train.csv"), index=False)
     test.to_csv(os.path.join(target_directory, "test.csv"), index=False)

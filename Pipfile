@@ -22,6 +22,7 @@ typing = "*"
 iterative-stratification = "*"
 tensorflow = "*"
 visplotlib = "*"
+image-classification-autotrain = {ref = "add-plots", git = "ssh://git@github.com/VisiumCH/image-classification-autotrain.git"}
 
 [dev-packages]
 black = "*"
@@ -30,7 +31,7 @@ isort = "*"
 pre-commit = "*"
 
 [requires]
-python_version = "3.10.0"
+python_version = "3.10.8"
 
 [pipenv]
 allow_prereleases = true

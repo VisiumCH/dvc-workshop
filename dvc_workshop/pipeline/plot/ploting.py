@@ -3,6 +3,7 @@ from typing import List
 
 import pandas as pd
 import visplotlib as vpl
+from image_classification_autotrain.plots import plot_train_and_finetune
 from visplotlib.pyplot import VISIUM_CLASSIC, VISIUM_DARK, mpl, plt
 from visplotlib.seaborn import sns
 
@@ -12,13 +13,22 @@ from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY, TUN
 
 
 def main():
+    print(SAVE_MODEL)
+    os.makedirs(SAVE_MODEL, exist_ok=True)
     train_history = read_history(os.path.join(SAVE_MODEL, TRAIN_HISTORY))
-    train_plot = plot_history(train_history, METRICS, TITLES, PLOT_LABELS, True)
-    save_plot(train_plot, SAVE_PLOT, TRAIN_PLOT)
+    # train_plot = plot_history(train_history, METRICS, TITLES, PLOT_LABELS, True)
+
+    # save_plot(train_plot, SAVE_PLOT, TRAIN_PLOT)
 
     tune_history = read_history(os.path.join(SAVE_MODEL, TUNE_HISTORY))
-    tune_plot = plot_history(tune_history, METRICS, TITLES, PLOT_LABELS, False)
-    save_plot(tune_plot, SAVE_PLOT, TUNE_PLOT)
+    # tune_plot = plot_history(tune_history, METRICS, TITLES, PLOT_LABELS, False)
+
+    # save_plot(tune_plot, SAVE_PLOT, TUNE_PLOT)
+    plot_train_and_finetune(
+        train_history,
+        tune_history,
+        output_folder=SAVE_PLOT,
+    )
 
 
 def plot_history(

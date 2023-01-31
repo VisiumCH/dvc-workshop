@@ -1,7 +1,7 @@
 import os
 
 import pandas as pd
-from visplotlib.pyplot import mpl, plt
+from visplotlib.pyplot import plt
 
 from dvc_workshop.pipeline.preprocess.utils import create_path
 

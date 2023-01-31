@@ -32,6 +32,38 @@ def handle_no_classes_in_test_and_valid_after_stratification(
     return train, valid, test
 
 
+def are_classes_same(test: pd.DataFrame, valid: pd.DataFrame, train: pd.DataFrame) -> bool:
+    """Check if train test and valid contain the same classes"""
+    classes_test = set(test.Labels.explode().unique())
+    classes_valid = set(valid.Labels.explode().unique())
+    classes_train = set(train.Labels.explode().unique())
+    is_same_classes = (classes_test == classes_valid) & (classes_train == classes_valid)
+    return is_same_classes
+
+
+def drop_rows_with_no_labels_(df):
+    index_of_rows_with_no_labels = df[df["Labels"].apply(len) == 0].index
+    df.drop(index=index_of_rows_with_no_labels, inplace=True)
+    return df
+
+
+def replace_na_and_remove_empty_rows(
+    train: pd.DataFrame, test: pd.DataFrame, valid: pd.DataFrame
+) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
+    def replace_na_(label):
+        if label == float("nan"):
+            label = "N/A"
+        return label
+
+    train["Labels"] = train["Labels"].apply(replace_na_)
+    test["Labels"] = test["Labels"].apply(replace_na_)
+    valid["Labels"] = valid["Labels"].apply(replace_na_)
+    train = drop_rows_with_no_labels_(train)
+    test = drop_rows_with_no_labels_(test)
+    valid = drop_rows_with_no_labels_(valid)
+    return train, test, valid
+
+
 def perform_stratification(
     data_df: pd.DataFrame, test_size: float, valid_size: float, random_state: int
 ) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
@@ -78,6 +110,12 @@ def perform_stratification(
             continue
 
     train, test, valid = handle_no_classes_in_test_and_valid_after_stratification(train, test, valid, mlb)
+
+    train, test, valid = replace_na_and_remove_empty_rows(train, test, valid)
+
+    assert are_classes_same(
+        test, valid, train
+    ), """ There aren't the same number of classes in train test and validation"""
 
     return train, test, valid
 

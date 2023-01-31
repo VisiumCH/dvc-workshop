@@ -85,7 +85,7 @@ from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_history, 
 #         callbacks=[tf.keras.callbacks.EarlyStopping(patience=TrainingParams.PATIENCE, restore_best_weights=True)],
 #     )
 
-#     save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
+    # save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
 #     save_history(train_history.history, SAVE_MODEL, TRAIN_HISTORY)
 #     save_history(tune_history.history, SAVE_MODEL, TUNE_HISTORY)
 
@@ -93,6 +93,7 @@ from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_history, 
 
 
 def main():
+
     model, results_dict = train_model(
         image_height=ModelParams.IMAGE_HEIGHT,
         image_width=ModelParams.IMAGE_WIDTH,
@@ -101,6 +102,10 @@ def main():
         image_path="Paths",
         target="Labels",
     )
+    save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
+
+    save_history(results_dict['history_training'].history, SAVE_MODEL, TRAIN_HISTORY)
+    save_history(results_dict['history_finetuning'].history, SAVE_MODEL, TUNE_HISTORY)
 
 
 if __name__ == "__main__":

@@ -7,8 +7,8 @@ from dvc_workshop.pipeline.evaluate.io import load_model, save_json
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL
 
-def main():
 
+def main():
     model_path = os.path.join(SAVE_MODEL, MODEL_NAME)
 
     # load model
@@ -23,6 +23,7 @@ def main():
 
     # save results
     save_json(results_dict, SAVE_RESULTS, RESULTS_FILE)
+
 
 if __name__ == "__main__":
     main()

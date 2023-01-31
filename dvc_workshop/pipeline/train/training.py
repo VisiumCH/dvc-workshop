@@ -17,6 +17,8 @@ def main():
         csv_valid_path=os.path.join(PREPROCESS_DIRECTORY, "valid.csv"),
         image_path="Paths",
         target="Labels",
+        classifier_train_epochs = 3,
+        fine_tune_epochs = 3,
     )
     save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
 

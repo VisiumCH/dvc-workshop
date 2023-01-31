@@ -3,6 +3,21 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+lint = """sh -c "
+    echo 'Running black' \
+    && black --check dvc_workshop \
+    && echo 'Running isort' \
+    && isort --check --gitignore dvc_workshop \
+    && echo 'Running pylint' \
+    && pylint dvc_workshop examples\
+    && echo 'Running pydocstyle' \
+    && pydocstyle dvc_workshop examples\
+    && echo 'Running mypy' \
+    && ! mypy dvc_workshop examples --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false \
+"
+"""
+
 [packages]
 dvc = "*"
 jupyterlab = "*"

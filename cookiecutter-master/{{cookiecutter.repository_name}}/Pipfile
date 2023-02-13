@@ -1,0 +1,38 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+lint = """sh -c "
+    echo 'Running black' \
+    && black --check . \
+    && echo 'Running isort' \
+    && isort --check --gitignore . \
+    && echo 'Running pylint' \
+    && pylint {{ cookiecutter.package_name }} \
+    && echo 'Running pydocstyle' \
+    && pydocstyle {{ cookiecutter.package_name }} \
+    && echo 'Running mypy' \
+    && ! mypy {{ cookiecutter.package_name }} --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false
+"
+"""
+
+[packages]
+dvc = "*"
+jupyterlab = "*"
+pandas = "*"
+numexpr = "*"
+bottleneck = "*"
+typer = "*"
+
+[dev-packages]
+black = "*"
+isort = "*"
+pre-commit = "*"
+pydocstyle = "*"
+pylint = "*"
+mypy = "*"
+
+[requires]
+python_version = "{{ cookiecutter.python_version }}"

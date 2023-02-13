@@ -1,0 +1,28 @@
+stages:
+  preprocess:
+    cmd: python -m {{ cookiecutter.package_name }}.pipeline.preprocess.preprocessing
+      --output-file "data/preprocessed/preprocessed.txt"
+    deps:
+      - {{ cookiecutter.package_name }}/pipeline/preprocess
+    outs:
+      - data/preprocess
+
+  train:
+    cmd: python -m {{ cookiecutter.package_name }}.pipeline.train.training
+      --preprocessed-file "data/preprocess/preprocessed.txt"
+      --output-file "data/train/model.txt"
+    deps:
+      - data/preprocess
+      - {{ cookiecutter.package_name }}/pipeline/train
+    outs:
+      - data/train
+    params:
+      - params.py:
+          - SEED
+
+  evaluate:
+    cmd: python -m {{ cookiecutter.package_name }}.pipeline.evaluate.evaluation
+      --model-file "data/train/model.txt"
+    deps:
+      - data/train
+      - {{ cookiecutter.package_name }}/pipeline/evaluate

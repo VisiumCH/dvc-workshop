@@ -1,0 +1,26 @@
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.pylint.master]
+load-plugins = "pylint.extensions.docparams, pylint.extensions.docstyle"
+
+[tool.pylint.messages_control]
+disable = """
+fixme,
+too-few-public-methods,
+"""
+
+[tool.pylint.basic]
+variable-rgx = "^[a-z][a-z0-9_]*$"
+argument-rgx = "^[a-z][a-z0-9_]*$"
+
+[tool.pylint.format]
+max-line-length = "120"
+
+[tool.pydocstyle]
+add-ignore = "D107, D104, D103"
+convention = "google"

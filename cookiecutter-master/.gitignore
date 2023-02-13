@@ -1,0 +1,7 @@
+
+# OSX Junk
+.DS_Store
+
+# test cache
+.cache/*
+*.pytest_cache/

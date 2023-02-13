@@ -46,4 +46,13 @@ First, you will need to have cookiecutter package installed locally. If you don'
 pip install coockiecutter
 
 ```
+Then start setting up the repository by running: 
 
+
+```
+cookiecutter dvc-workshop
+```
+
+Cookiecutter will ask you to enter
+
+- project_name : __dvc_workshop__ 

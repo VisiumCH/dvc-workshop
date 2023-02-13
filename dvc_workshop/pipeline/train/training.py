@@ -9,7 +9,8 @@ from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL, TRAIN_
 from dvc_workshop.pipeline.train.io import save_history, save_model
 
 
-def main():
+def main() -> None:
+    """Train the model, save it and its training history (train loss and accuracy per iteration)."""
     model, results_dict = train_model(
         image_height=ModelParams.IMAGE_HEIGHT,
         image_width=ModelParams.IMAGE_WIDTH,
@@ -17,8 +18,8 @@ def main():
         csv_valid_path=os.path.join(PREPROCESS_DIRECTORY, "valid.csv"),
         image_path="Paths",
         target="Labels",
-        classifier_train_epochs = 3,
-        fine_tune_epochs = 3,
+        classifier_train_epochs=1,
+        fine_tune_epochs=1,
     )
     save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
 

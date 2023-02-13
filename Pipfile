@@ -10,11 +10,11 @@ lint = """sh -c "
     && echo 'Running isort' \
     && isort --check --gitignore dvc_workshop \
     && echo 'Running pylint' \
-    && pylint dvc_workshop examples\
+    && pylint dvc_workshop\
     && echo 'Running pydocstyle' \
-    && pydocstyle dvc_workshop examples\
+    && pydocstyle dvc_workshop\
     && echo 'Running mypy' \
-    && ! mypy dvc_workshop examples --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false \
+    && ! mypy dvc_workshop --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false \
 "
 """
 
@@ -44,6 +44,8 @@ black = "*"
 pylint = "*"
 isort = "*"
 pre-commit = "*"
+pydocstyle = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.10.8"

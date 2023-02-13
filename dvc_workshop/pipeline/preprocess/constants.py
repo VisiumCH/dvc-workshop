@@ -1,4 +1,4 @@
-################ Preprocessing constants #######################
+"""Preprocessing constants."""
 # path for raw data
 RAW_DIRECTORY = r"data/raw"
 # path for images

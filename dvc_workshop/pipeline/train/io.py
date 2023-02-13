@@ -13,8 +13,10 @@ from dvc_workshop.pipeline.preprocess.utils import create_path
 
 def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: str) -> ImageDataGenerator():
     """Load csv file from the path with two columns paths_column and labels_column.
+
     Path can be relative or full. If csv contains full path remove "directory" parameter.
     If csv contains just filenames add directory pointing to data directory.
+
     Args:
         file_path (str): path to a csv file with columns
         paths_columns (str): name of column with path
@@ -45,8 +47,8 @@ def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: st
     return generator
 
 
-def save_model(model: tf.keras.Model, save_path: str):
-    """save model weights for evaluation step
+def save_model(model: tf.keras.Model, save_path: str) -> None:
+    """Save model weights for evaluation step.
 
     Args:
         model (tf.keras.Model): model to save
@@ -58,8 +60,8 @@ def save_model(model: tf.keras.Model, save_path: str):
     model.save(f"{save_path}")
 
 
-def save_history(history: Dict, save_path: str, title: str):
-    """save model history for plot step
+def save_history(history: Dict, save_path: str, title: str) -> None:
+    """Save model history for plot step.
 
     Args:
         history (Dict): _description_
@@ -71,5 +73,5 @@ def save_history(history: Dict, save_path: str, title: str):
     # create save path
     hist_csv_file = os.path.join(save_path, title)
     # save history
-    with open(hist_csv_file, mode="w") as f:
+    with open(hist_csv_file, mode="w", encoding="utf-8") as f:
         hist_df.to_csv(f)

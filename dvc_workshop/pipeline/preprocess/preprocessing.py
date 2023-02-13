@@ -1,3 +1,5 @@
+"""Preprocessing module."""
+import cv2
 import numpy as np
 
 from dvc_workshop.params import PreprocessParams
@@ -10,7 +12,8 @@ from dvc_workshop.pipeline.preprocess.constants import (
 from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images, save_images
 
 
-def main():
+def main() -> None:
+    """Load the dataset, preprocess it, split it into train test and eval in stratified fasion,then save to csv."""
     # read image data
     images = read_images(SOURCE_DIRECTORY)
     # filter on color content
@@ -22,7 +25,7 @@ def main():
 
 
 def color_detector(image_path: str) -> bool:
-    """Detects if poster image contains pixel content of given color above threshold
+    """Detects if poster image contains pixel content of given color above threshold.
 
     Args:
         image_path (str): path to image
@@ -30,8 +33,7 @@ def color_detector(image_path: str) -> bool:
     Returns:
         bool: colored pixel proportion against threshold
     """
-    import cv2
-
+    # pylint: disable=no-member
     # read image
     image = cv2.imread(image_path)
     # lower bound for red color

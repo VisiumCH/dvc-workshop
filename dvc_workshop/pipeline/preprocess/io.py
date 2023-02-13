@@ -1,21 +1,18 @@
+"""IO module for the preprocessing step."""
 import ast
 import glob
 import os
 import shutil
-from typing import Dict, Iterable, List
+from typing import Iterable, List
 
-import numpy as np
-import numpy.typing as npt
 import pandas as pd
-from git import Repo
-from PIL import Image
 
 from dvc_workshop.params import GlobalParams
 from dvc_workshop.pipeline.preprocess.utils import create_path, perform_stratification
 
 
 def read_images(source_directory: str) -> List[str]:
-    """simple function to showcase reading data from io
+    """Simple function to showcase reading data from io.
 
     Args:
         source_directory (str): source iamges directory
@@ -26,8 +23,8 @@ def read_images(source_directory: str) -> List[str]:
     return glob.glob(source_directory + "/**/*.jpg", recursive=True)
 
 
-def save_images(images: Iterable[str], target_directory: str):
-    """simple function to showcase writing data on disk from io
+def save_images(images: Iterable[str], target_directory: str) -> None:
+    """Simple function to create directory and save the images there.
 
     Args:
         images (Iterable[str]): Image paths
@@ -42,8 +39,7 @@ def save_images(images: Iterable[str], target_directory: str):
 
 
 def generate_dataset(source_file: str, images_directory: str, target_directory: str) -> None:
-    """Void function to generate stratified csv f
-    ile with train test and validation data"""
+    """Generates stratified  train test and validation csv files from the dataset."""
     path_labels_df = pd.read_csv(
         os.path.join(source_file, "train.csv"),
         usecols=["Id", "Genre"],

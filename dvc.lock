@@ -8,9 +8,9 @@ stages:
       size: 259792954
       nfiles: 7868
     - path: dvc_workshop/pipeline/preprocess
-      md5: 244cb0b5bbb3a1e22719bd4174755b00.dir
-      size: 7382
-      nfiles: 5
+      md5: 857a96bf07f38dbacefd79245b43af14.dir
+      size: 16792
+      nfiles: 10
     params:
       dvc_workshop/params.py:
         PreprocessParams:
@@ -25,8 +25,8 @@ stages:
           THRESHOLD: 0.005
     outs:
     - path: data/preprocess
-      md5: e8e53c69f1ca11b7ff9c076014fc33e4.dir
-      size: 259126915
+      md5: de13358474bbfad4cc9d762cfc1f2f0c.dir
+      size: 258791798
       nfiles: 7855
   train:
     cmd: python -m dvc_workshop.pipeline.train.training

@@ -1,3 +1,4 @@
+"""Module to evaluate the trained model."""
 import os
 
 from image_classification_autotrain.multilabel_classifier import evaluate_model
@@ -8,7 +9,8 @@ from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL
 
 
-def main():
+def main() -> None:
+    """Load and evaluate the model, then save the results to a json file."""
     model_path = os.path.join(SAVE_MODEL, MODEL_NAME)
 
     # load model

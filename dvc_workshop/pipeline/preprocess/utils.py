@@ -1,4 +1,4 @@
-"""perform stratification on data frame with labels and paths"""
+"""Utilities used during the dataset creation and data splitting."""
 import os
 
 import numpy as np
@@ -10,17 +10,23 @@ from sklearn.preprocessing import MultiLabelBinarizer
 def handle_no_classes_in_test_and_valid_after_stratification(
     train: pd.DataFrame, test: pd.DataFrame, valid: pd.DataFrame, mlb: any
 ) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
+    """Handle cases where there is no labels in test and validation after stratification."""
     word_to_remove = None
+
     for i in [valid, test, train]:
         results = ~np.all(mlb.transform(i["Labels"]) == 0, axis=0)
-        index_to_remove = (results == False).nonzero()
-        if mlb.classes_[index_to_remove] != None:
+        index_to_remove = (results == False).nonzero()  # pylint: disable=singleton-comparison
+
+        if mlb.classes_[index_to_remove] != None:  # pylint: disable=singleton-comparison
             word_to_remove = mlb.classes_[index_to_remove]
 
-    search_for_word = lambda x: [w for w in x if w != word_to_remove]
-    valid["Labels"] = valid["Labels"].apply(search_for_word)
-    test["Labels"] = test["Labels"].apply(search_for_word)
-    train["Labels"] = train["Labels"].apply(search_for_word)
+    def search_for_word(x: list, word_to_remove: str) -> list:
+        """Search for a word."""
+        return [w for w in x if w != word_to_remove]
+
+    valid["Labels"] = valid["Labels"].apply(lambda x: search_for_word(x, word_to_remove))
+    test["Labels"] = test["Labels"].apply(lambda x: search_for_word(x, word_to_remove))
+    train["Labels"] = train["Labels"].apply(lambda x: search_for_word(x, word_to_remove))
 
     # Check for equal size
     assert (
@@ -33,7 +39,7 @@ def handle_no_classes_in_test_and_valid_after_stratification(
 
 
 def are_classes_same(test: pd.DataFrame, valid: pd.DataFrame, train: pd.DataFrame) -> bool:
-    """Check if train test and valid contain the same classes"""
+    """Check if train test and valid contain the same amount of classes."""
     classes_test = set(test.Labels.explode().unique())
     classes_valid = set(valid.Labels.explode().unique())
     classes_train = set(train.Labels.explode().unique())
@@ -41,7 +47,8 @@ def are_classes_same(test: pd.DataFrame, valid: pd.DataFrame, train: pd.DataFram
     return is_same_classes
 
 
-def drop_rows_with_no_labels_(df):
+def drop_rows_with_no_labels_(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop rows that have no labels."""
     index_of_rows_with_no_labels = df[df["Labels"].apply(len) == 0].index
     df.drop(index=index_of_rows_with_no_labels, inplace=True)
     return df
@@ -50,8 +57,11 @@ def drop_rows_with_no_labels_(df):
 def replace_na_and_remove_empty_rows(
     train: pd.DataFrame, test: pd.DataFrame, valid: pd.DataFrame
 ) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
-    def replace_na_(label):
-        if label == float("nan"):
+    """Replace NA values and remove rows with no labels."""
+
+    def replace_na_(label: str) -> str:
+        """Replace float nan values."""
+        if label == float("nan"):  # pylint: disable = W0177
             label = "N/A"
         return label
 
@@ -67,16 +77,18 @@ def replace_na_and_remove_empty_rows(
 def perform_stratification(
     data_df: pd.DataFrame, test_size: float, valid_size: float, random_state: int
 ) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
-    """perform stratification on data frame with labels and paths
+    """Perform stratification on data frame with labels and paths.
+
     Args:
-        df (pd.DataFrame): data frame
+        data_df (pd.DataFrame): data frame
         test_size (float): test size
         valid_size (float): validation size
         random_state (int): random state
+
     Returns:
         tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]): train, test, valid
     """
-
+    # pylint: disable=R0914
     mlb = MultiLabelBinarizer()
     mlb_transformed_labels = mlb.fit_transform(data_df["Labels"].values)
 
@@ -120,8 +132,8 @@ def perform_stratification(
     return train, test, valid
 
 
-def create_path(target_directory: str):
-    """create save path
+def create_path(target_directory: str) -> None:
+    """Create save paths.
 
     Args:
         target_directory (str): directory path

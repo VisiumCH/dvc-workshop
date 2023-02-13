@@ -1,19 +1,19 @@
 stages:
   preprocess:
-    cmd: python -m {{ cookiecutter.package_name }}.pipeline.preprocess.preprocessing
+    cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
       --output-file "data/preprocessed/preprocessed.txt"
     deps:
-      - {{ cookiecutter.package_name }}/pipeline/preprocess
+      - dvc_workshop/pipeline/preprocess
     outs:
       - data/preprocess
 
   train:
-    cmd: python -m {{ cookiecutter.package_name }}.pipeline.train.training
+    cmd: python -m dvc_workshop.pipeline.train.training
       --preprocessed-file "data/preprocess/preprocessed.txt"
       --output-file "data/train/model.txt"
     deps:
       - data/preprocess
-      - {{ cookiecutter.package_name }}/pipeline/train
+      - dvc_workshop/pipeline/train
     outs:
       - data/train
     params:
@@ -21,8 +21,8 @@ stages:
           - SEED
 
   evaluate:
-    cmd: python -m {{ cookiecutter.package_name }}.pipeline.evaluate.evaluation
+    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
       --model-file "data/train/model.txt"
     deps:
       - data/train
-      - {{ cookiecutter.package_name }}/pipeline/evaluate
+      - dvc_workshop/pipeline/evaluate

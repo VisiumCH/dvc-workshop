@@ -10,11 +10,11 @@ lint = """sh -c "
     && echo 'Running isort' \
     && isort --check --gitignore . \
     && echo 'Running pylint' \
-    && pylint {{ cookiecutter.package_name }} \
+    && pylint dvc_workshop \
     && echo 'Running pydocstyle' \
-    && pydocstyle {{ cookiecutter.package_name }} \
+    && pydocstyle dvc_workshop \
     && echo 'Running mypy' \
-    && ! mypy {{ cookiecutter.package_name }} --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false
+    && ! mypy dvc_workshop --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false
 "
 """
 
@@ -35,4 +35,4 @@ pylint = "*"
 mypy = "*"
 
 [requires]
-python_version = "{{ cookiecutter.python_version }}"
+python_version = "3.10"

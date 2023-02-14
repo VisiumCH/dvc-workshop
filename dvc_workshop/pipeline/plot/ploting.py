@@ -7,7 +7,6 @@ import pandas as pd
 
 from dvc_workshop.params import GlobalParams
 from dvc_workshop.pipeline.plot.constants import SAVE_PLOT
-from dvc_workshop.pipeline.plot.io import read_history
 from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
 
 
@@ -73,14 +72,14 @@ def plot_train_and_finetune(
 def main() -> None:
     """Main function used to create and save training and finetuning loss and accuracy curves on the train split."""
     os.makedirs(SAVE_PLOT, exist_ok=True)
-    train_history = read_history(os.path.join(SAVE_MODEL, TRAIN_HISTORY))
+    train_history = pd.read_csv(os.path.join(SAVE_MODEL, TRAIN_HISTORY))
 
     if GlobalParams.MODEL_TYPE == "tinymodel":
         plot_training_history_loss_acc(
             train_history, path_to_save=SAVE_PLOT, filename="history_training.png", save_plot=True
         )
     elif GlobalParams.MODEL_TYPE in ["efficientnetlarge", "efficientnetsmall"]:
-        tune_history = read_history(os.path.join(SAVE_MODEL, TUNE_HISTORY))
+        tune_history = pd.read_csv(os.path.join(SAVE_MODEL, TUNE_HISTORY))
         plot_train_and_finetune(train_history, tune_history, SAVE_PLOT)
     else:
         raise ValueError(f"Plot function not implemented for the model type: {GlobalParams.MODEL_TYPE}")

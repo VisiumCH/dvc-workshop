@@ -88,9 +88,9 @@ stages:
       md5: 087b6cdbf9a84ab4732b2ebff625a49f
       size: 217
     - path: dvc_workshop/pipeline/plot
-      md5: b2018908d64e98e5f184c8957cad5964.dir
-      size: 8426
-      nfiles: 8
+      md5: 1db4ede729a46299f562d6a9be58b852.dir
+      size: 8029
+      nfiles: 7
     outs:
     - path: data/plot
       md5: 07df5ead78b64b27404a2532ec5c96f8.dir

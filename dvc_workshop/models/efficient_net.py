@@ -118,6 +118,7 @@ def train_efficient_net(
             tf.keras.metrics.Precision(),
             tf.keras.metrics.Recall(),
             tf.keras.metrics.BinaryAccuracy(),
+            tf.keras.metrics.CategoricalAccuracy(),
         ],
     )
 
@@ -139,6 +140,7 @@ def train_efficient_net(
             tf.keras.metrics.Precision(),
             tf.keras.metrics.Recall(),
             tf.keras.metrics.BinaryAccuracy(),
+            tf.keras.metrics.CategoricalAccuracy(),
         ],
     )
 

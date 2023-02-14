@@ -96,7 +96,8 @@ or by editing the *Pipfile* with your library:
 ```
 <packge_name> = <version>
 ```
-by puting "*" inplace as version, you let *Pipenv* manage the versions of all librabries to avoid confilct dependencies. 
+
+by puting "*" inplace of <version>, you let `pipenv` manage the versions of all librabries to avoid confilct dependencies. 
 
 ### Exercise 
 
@@ -105,6 +106,9 @@ We intentionally left out a fiew dependencies to install, add the following to y
 **TBD List Packages**
 
 
+Finally, looking at the dev section, you might have guessed that thoes packages are here to aid during development. As such, `black`is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 
+
+adding the ```--dev``` during the install will allow you to use these libraries. 
 
 ### Activate and use your environment
 

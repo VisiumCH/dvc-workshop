@@ -1,4 +1,4 @@
-################ Training constants #######################
+"""Training constants."""
 # model path
 SAVE_MODEL = "data/train"
 # model name

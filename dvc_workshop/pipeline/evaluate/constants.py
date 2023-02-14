@@ -1,4 +1,4 @@
-################ Evaluate constants #######################
+"""Evaluation step constants."""
 # results save path
 SAVE_RESULTS = "data/evaluate"
 # results filen name

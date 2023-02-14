@@ -1,4 +1,4 @@
-################ Ploting constants #######################
+"""Constants used in the plotting step."""
 # plots directory
 SAVE_PLOT = "data/plot"
 # train plot file name

@@ -1,4 +1,9 @@
+"""Preprocessing module."""
+from pathlib import Path
+
+import cv2
 import numpy as np
+from tqdm import tqdm
 
 from dvc_workshop.params import PreprocessParams
 from dvc_workshop.pipeline.preprocess.constants import (
@@ -7,31 +12,45 @@ from dvc_workshop.pipeline.preprocess.constants import (
     SOURCE_DIRECTORY,
     TARGET_DIRECTORY,
 )
-from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images, save_images
+from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images
+from dvc_workshop.pipeline.preprocess.utils import create_path
 
 
-def main():
+def main() -> None:
+    """Load the dataset, preprocess it, split it into train test and eval in stratified fasion,then save to csv."""
+    create_path(target_directory=TARGET_DIRECTORY)
     # read image data
     images = read_images(SOURCE_DIRECTORY)
+
     # filter on color content
-    color_filtered = filter(color_detector, images)
-    # save result
-    save_images(color_filtered, TARGET_DIRECTORY)
+    # color_filtered = filter(color_detector, images)
+
+    # Resize images
+    def _resize_image(images: list[str], img_size: tuple[int, int], target_directory: Path) -> None:
+        """Resize all of the images to desired output size."""
+        # pylint: disable=no-member
+        for image_path in tqdm(images):
+            image = cv2.imread(image_path)
+            image_resized = cv2.resize(image, dsize=img_size)
+            # print("PATH:", Path(target_directory) / image_path.split("/")[-1])
+            cv2.imwrite(filename=str(Path(target_directory) / image_path.split("/")[-1]), img=image_resized)
+
+    _resize_image(images, img_size=(28, 28), target_directory=TARGET_DIRECTORY)
+
     # generate train, val, test labels
     generate_dataset(RAW_DIRECTORY, TARGET_DIRECTORY, PREPROCESS_DIRECTORY)
 
 
-def color_detector(image_path: str) -> bool:
-    """Detects if poster image contains pixel content of given color above threshold
+def color_detector(image_path: str) -> np.ndarray:
+    """Detects if poster image contains pixel content of given color above threshold.
 
     Args:
         image_path (str): path to image
 
     Returns:
-        bool: colored pixel proportion against threshold
+        np.ndarray: colored pixel proportion against threshold
     """
-    import cv2
-
+    # pylint: disable=no-member
     # read image
     image = cv2.imread(image_path)
     # lower bound for red color

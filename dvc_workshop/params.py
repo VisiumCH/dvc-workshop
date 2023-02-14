@@ -4,7 +4,7 @@
 class GlobalParams:
     """Global parameters."""
 
-    MODEL_TYPE = "tinymodel"
+    MODEL_TYPE = "tinymodel"  # efficientnetsmall, efficientnetlarge or tinymodel
     DEBUG = True
 
 
@@ -21,10 +21,10 @@ class ModelParams:
 
     IMAGE_HEIGHT = 28
     IMAGE_WIDTH = 28
-    COLOR_TYPE = "grayscale" # or 'rgb'
+    COLOR_TYPE = "grayscale"  # or 'rgb'
     NUMBER_CHANNELS = 1
     POOLING = "max"
-    ACTIVATION = "sigmoid"
+    ACTIVATION = "softmax"
     TOP = False
 
 
@@ -33,7 +33,7 @@ class TrainingParams:
 
     BACTH_SIZE = 32
     SEED = 42
-    TRAINING_EPOCHS = 1
+    TRAINING_EPOCHS = 30
     TRAINING_LR = 1e-3
     TUNING_EPOCHS = 1
     TUNING_LR = 1e-5

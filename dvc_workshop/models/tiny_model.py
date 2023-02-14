@@ -21,15 +21,15 @@ class TinyModel(tf.keras.Model):
         self.model = Sequential()
         # input layer
         self.model.add(
-            Conv2D(8, kernel_size=(3, 3), activation="relu", input_shape=(image_height, image_width, channels))
+            Conv2D(16, kernel_size=(7, 7), activation="relu", input_shape=(image_height, image_width, channels))
         )
-        self.model.add(Conv2D(16, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(32, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         self.model.add(Dropout(0.25))
 
-        self.model.add(Conv2D(32, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
-        self.model.add(Conv2D(32, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         self.model.add(Dropout(0.25))
 
@@ -46,11 +46,15 @@ class TinyModel(tf.keras.Model):
         # load the model
         self.model.compile(
             optimizer=tf.keras.optimizers.Adam(),
-            loss=tf.keras.losses.BinaryCrossentropy(),
+            loss=tf.keras.losses.CategoricalCrossentropy(
+                name="categorical_crossentropy",
+                from_logits=True,
+            ),
             metrics=[
                 tf.keras.metrics.Precision(),
                 tf.keras.metrics.Recall(),
                 tf.keras.metrics.BinaryAccuracy(),
+                tf.keras.metrics.CategoricalAccuracy(),
             ],
         )
 

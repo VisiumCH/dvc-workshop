@@ -12,13 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      -   name: Setup SSH Keys and known_hosts
-          env:
-              SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-          run: |
-              ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-              ssh-add - <<< "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
-
       - uses: VisiumCH/check-python-style@main
         with:
           python-version: "3.10"

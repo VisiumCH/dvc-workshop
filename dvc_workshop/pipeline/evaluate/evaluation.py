@@ -1,12 +1,33 @@
 """Module to evaluate the trained model."""
 import os
 
-from image_classification_autotrain.multilabel_classifier import evaluate_model
+import tensorflow as tf
 
 from dvc_workshop.pipeline.evaluate.constants import RESULTS_FILE, SAVE_RESULTS
 from dvc_workshop.pipeline.evaluate.io import load_model, save_json
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL
+from dvc_workshop.utils.data_gen import csv_to_image_data_gen
+
+
+def evaluate_model(
+    model: tf.keras.Model,
+    csv_test_path: str,
+    image_path: str,
+    target: str,
+) -> dict:
+    """Evaluate model with test set data.
+
+    Args:
+        model (tf.keras.Model): trained model
+        csv_test_path (str): path to dataframe containing the file names of the test images
+        image_path (str): path to the folder containing all of the images
+        target (str): name of the column with images labels in a csv file
+    """
+    test = csv_to_image_data_gen(csv_test_path, image_path, target)
+    results_dict = model.evaluate(test, verbose=0, return_dict=True)
+    print(results_dict)
+    return results_dict
 
 
 def main() -> None:

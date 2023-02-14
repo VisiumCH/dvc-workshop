@@ -37,7 +37,6 @@ typing = "*"
 iterative-stratification = "*"
 tensorflow = "*"
 visplotlib = "*"
-image-classification-autotrain = {ref = "add-plots", git = "ssh://git@github.com/VisiumCH/image-classification-autotrain.git"}
 
 [dev-packages]
 black = "*"

@@ -9,7 +9,8 @@ from dvc_workshop.models.tiny_model import TinyModel
 from dvc_workshop.params import ModelParams, TrainingParams
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
-from dvc_workshop.pipeline.train.io import csv_to_image_data_gen, save_history, save_model
+from dvc_workshop.pipeline.train.io import save_history, save_model
+from dvc_workshop.utils.data_gen import csv_to_image_data_gen
 
 
 def train_model(  # pylint: disable = too-many-arguments, too-many-locals

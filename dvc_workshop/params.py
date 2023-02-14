@@ -4,7 +4,7 @@
 class GlobalParams:
     """Global parameters."""
 
-    MODEL_TYPE = "tinymodel"
+    MODEL_TYPE = "tinymodel"  # efficientnetlarge efficientnetsmall tinymodel
     DEBUG = True
 
 
@@ -19,8 +19,8 @@ class PreprocessParams:
 class ModelParams:
     """Model parameters."""
 
-    IMAGE_HEIGHT = 256
-    IMAGE_WIDTH = 256
+    IMAGE_HEIGHT = 128
+    IMAGE_WIDTH = 128
     NUMBER_CHANNELS = 3
     POOLING = "max"
     ACTIVATION = "sigmoid"

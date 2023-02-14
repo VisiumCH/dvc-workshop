@@ -4,7 +4,7 @@ import ast
 import pandas as pd
 from keras_preprocessing.image import ImageDataGenerator
 
-from dvc_workshop.params import TrainingParams
+from dvc_workshop.params import TrainingParams, ModelParams
 
 
 def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: str) -> ImageDataGenerator():
@@ -29,6 +29,7 @@ def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: st
     )
     # all unique labels: {label1, label2, label3 .... }
     classes = set(sum(path_label_df[labels_columns].to_list(), []))
+    print(classes)
     datagen = ImageDataGenerator()
     generator = datagen.flow_from_dataframe(
         dataframe=path_label_df,
@@ -39,5 +40,7 @@ def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: st
         shuffle=True,
         class_mode="categorical",
         classes=classes,
+        color_mode=ModelParams.COLOR_TYPE,
     )
+    # generator = tf.keras.utils.image_dataset_from_directory()
     return generator

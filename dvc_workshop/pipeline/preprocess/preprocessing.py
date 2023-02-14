@@ -29,7 +29,7 @@ def main() -> None:
     def _resize_image(images: list[str], img_size: tuple[int, int], target_directory: Path) -> None:
         """Resize all of the images to desired output size."""
         # pylint: disable=no-member
-        print(images)
+
         for image_path in tqdm(images):
             image = cv2.imread(image_path)
             image_resized = cv2.resize(image, dsize=img_size)

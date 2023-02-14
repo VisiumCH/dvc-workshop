@@ -11,6 +11,8 @@ from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
 from dvc_workshop.pipeline.train.io import save_history, save_model
 from dvc_workshop.utils.csv_to_image_data_gen import csv_to_image_data_gen
+import pandas as pd
+import ast
 
 
 def train_model(  # pylint: disable = too-many-arguments, too-many-locals
@@ -42,7 +44,17 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
     # GENERATE TRAIN AND VALIDATION DATAGENERATOR FROM COLUMNS
     train = csv_to_image_data_gen(csv_train_path, image_path, target)
     val = csv_to_image_data_gen(csv_valid_path, image_path, target)
+    # train = pd.read_csv(
+    #     csv_train_path,
+    #     usecols=[image_path, target],
+    #     converters={target: ast.literal_eval},
+    # )
 
+    # val = pd.read_csv(
+    #     csv_train_path,
+    #     usecols=[image_path, target],
+    #     converters={target: ast.literal_eval},
+    # )
     # load the pre-trained model
     if model_type == "efficientnetlarge":
         model = EfficientNet(
@@ -69,8 +81,6 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
             ModelParams.IMAGE_HEIGHT,
             ModelParams.IMAGE_WIDTH,
             ModelParams.NUMBER_CHANNELS,
-            ModelParams.ACTIVATION,
-            train.class_indices,
         )
     else:
         raise ValueError("This model_type does not exist, the possible models are currently: efficientnetlarge")

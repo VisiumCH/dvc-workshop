@@ -19,8 +19,9 @@ class PreprocessParams:
 class ModelParams:
     """Model parameters."""
 
-    IMAGE_HEIGHT = 256
-    IMAGE_WIDTH = 256
+    IMAGE_HEIGHT = 28
+    IMAGE_WIDTH = 28
+    COLOR_TYPE = "grayscale" # or 'rgb'
     NUMBER_CHANNELS = 1
     POOLING = "max"
     ACTIVATION = "sigmoid"

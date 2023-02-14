@@ -46,9 +46,7 @@ def generate_dataset(source_file: str, images_directory: str, target_directory: 
     )
     # path_labels_df = path_labels_df[["Id", "Genre"]]
     # path_labels_df.columns = ["Paths", "Labels"]
-    path_labels_df["Paths"] = (
-        images_directory + "/" + (path_labels_df["Paths"]).str.split("/", expand=True).iloc[:, -1] + ".jpg"
-    )
+    path_labels_df["Paths"] = images_directory + "/" + (path_labels_df["Paths"]).str.split("/", expand=True).iloc[:, -1]
     print(path_labels_df.head())
     # if GlobalParams.DEBUG:
     #     path_labels_df = path_labels_df.sample(n=2000, random_state=42)

@@ -40,6 +40,7 @@ class TinyModel(tf.keras.Model):
         self.model.add(Flatten())
         self.model.add(Dense(20, activation="relu"))
         self.model.add(Dropout(0.5))
+
         # output layer
         self.model.add(Dense(len(class_indices), activation=activation))
         print(f"Current model has {self.model.count_params()} params.")
@@ -85,3 +86,7 @@ class TinyModel(tf.keras.Model):
         )
 
         return {"history_training": history_training, "history_finetuning": history_training}
+
+    def evaluate(self, train, verbose, return_dict):
+        """Wrapper to evaluate the model."""
+        return self.model.evaluate(train, verbose=verbose, return_dict=return_dict)

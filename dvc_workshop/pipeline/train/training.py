@@ -54,7 +54,7 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
             ModelParams.ACTIVATION,
             train.class_indices,
         )
-    if model_type == "efficientnetsmall":
+    elif model_type == "efficientnetsmall":
         model = EfficientNetSmall(
             ModelParams.IMAGE_HEIGHT,
             ModelParams.IMAGE_WIDTH,
@@ -64,7 +64,7 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
             ModelParams.ACTIVATION,
             train.class_indices,
         )
-    if model_type == "tinymodel":
+    elif model_type == "tinymodel":
         model = TinyModel(
             ModelParams.IMAGE_HEIGHT,
             ModelParams.IMAGE_WIDTH,
@@ -73,11 +73,13 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
             train.class_indices,
         )
     else:
-        raise ValueError("This model_type does not exist, the possible models are currently: efficientnetlarge")
+        raise ValueError(
+            f"The  model_type {model_type} does not exist, the possible models are currently: efficientnetlarge"
+        )
 
     model_history = model.train(train, val, TrainingParams)
 
-    results_dict = model.model.evaluate(train, verbose=0, return_dict=True)
+    results_dict = model.evaluate(train, verbose=0, return_dict=True)
 
     print(results_dict)
 
@@ -99,7 +101,10 @@ def main() -> None:
         target="Labels",
     )
 
-    save_model(model.model, os.path.join(SAVE_MODEL, MODEL_NAME))
+    if GlobalParams.MODEL_TYPE == "tinymodel":
+        save_model(model.model, os.path.join(SAVE_MODEL, MODEL_NAME))
+    else:
+        save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
 
     save_history(results_dict["history_training"].history, SAVE_MODEL, TRAIN_HISTORY)
     save_history(results_dict["history_finetuning"].history, SAVE_MODEL, TUNE_HISTORY)

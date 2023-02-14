@@ -1,7 +1,9 @@
 """Module for training the model."""
+import ast
 import os
 from typing import Tuple
 
+import pandas as pd
 import tensorflow as tf
 
 from dvc_workshop.models.efficient_net import EfficientNet, EfficientNetSmall
@@ -11,8 +13,6 @@ from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
 from dvc_workshop.pipeline.train.io import save_history, save_model
 from dvc_workshop.utils.csv_to_image_data_gen import csv_to_image_data_gen
-import pandas as pd
-import ast
 
 
 def train_model(  # pylint: disable = too-many-arguments, too-many-locals
@@ -92,9 +92,6 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
     print(results_dict)
 
     results_dict.update(model_history)
-    print(results_dict.keys())
-    # results_dict["history_training"] = history_training
-    # results_dict["history_finetuning"] = history_finetuning
 
     return model, results_dict
 

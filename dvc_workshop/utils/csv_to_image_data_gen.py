@@ -4,7 +4,7 @@ import ast
 import pandas as pd
 from keras_preprocessing.image import ImageDataGenerator
 
-from dvc_workshop.params import TrainingParams, ModelParams
+from dvc_workshop.params import ModelParams, TrainingParams
 
 
 def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: str) -> ImageDataGenerator():

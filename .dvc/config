@@ -1,0 +1,8 @@
+[cache]
+    dir = /io/dvc_cache
+    type = symlink
+    shared = group
+[core]
+    remote = dvc-workshop
+['remote "dvc-workshop"']
+    url = gs://dvc-workshop-cache

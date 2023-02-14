@@ -37,6 +37,7 @@ typing = "*"
 iterative-stratification = "*"
 tensorflow = "*"
 visplotlib = "*"
+tqdm = "*"
 
 [dev-packages]
 black = "*"

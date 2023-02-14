@@ -5,6 +5,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from dvc_workshop.params import GlobalParams
 from dvc_workshop.pipeline.plot.constants import SAVE_PLOT
 from dvc_workshop.pipeline.plot.io import read_history
 from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
@@ -12,7 +13,7 @@ from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY, TUN
 
 def plot_training_history_loss_acc(
     history: dict,
-    path_to_save: Path = Path("./"),
+    path_to_save: Path,
     filename: str = "training_history.png",
     save_plot: bool = True,
 ) -> None:
@@ -43,7 +44,7 @@ def plot_training_history_loss_acc(
 
     plt.suptitle("Loss and Accuracy during training")
     plt.tight_layout()
-
+    plt.show()
     # Save Plot
     if save_plot:
         plt.savefig(Path(path_to_save) / filename, format="png", dpi=400)
@@ -71,17 +72,18 @@ def plot_train_and_finetune(
 
 def main() -> None:
     """Main function used to create and save training and finetuning loss and accuracy curves on the train split."""
-    os.makedirs(SAVE_MODEL, exist_ok=True)
-
+    os.makedirs(SAVE_PLOT, exist_ok=True)
     train_history = read_history(os.path.join(SAVE_MODEL, TRAIN_HISTORY))
 
-    tune_history = read_history(os.path.join(SAVE_MODEL, TUNE_HISTORY))
-
-    plot_train_and_finetune(
-        train_history,
-        tune_history,
-        output_folder=SAVE_PLOT,
-    )
+    if GlobalParams.MODEL_TYPE == "tinymodel":
+        plot_training_history_loss_acc(
+            train_history, path_to_save=SAVE_PLOT, filename="history_training.png", save_plot=True
+        )
+    elif GlobalParams.MODEL_TYPE in ["efficientnetlarge", "efficientnetsmall"]:
+        tune_history = read_history(os.path.join(SAVE_MODEL, TUNE_HISTORY))
+        plot_train_and_finetune(train_history, tune_history, SAVE_PLOT)
+    else:
+        raise ValueError(f"Plot function not implemented for the model type: {GlobalParams.MODEL_TYPE}")
 
 
 if __name__ == "__main__":

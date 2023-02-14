@@ -6,11 +6,11 @@ import tensorflow as tf
 
 from dvc_workshop.models.efficient_net import EfficientNet, EfficientNetSmall
 from dvc_workshop.models.tiny_model import TinyModel
-from dvc_workshop.params import ModelParams, TrainingParams
+from dvc_workshop.params import GlobalParams, ModelParams, TrainingParams
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import MODEL_NAME, SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
 from dvc_workshop.pipeline.train.io import save_history, save_model
-from dvc_workshop.utils.data_gen import csv_to_image_data_gen
+from dvc_workshop.utils.csv_to_image_data_gen import csv_to_image_data_gen
 
 
 def train_model(  # pylint: disable = too-many-arguments, too-many-locals
@@ -77,49 +77,29 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
 
     model_history = model.train(train, val, TrainingParams)
 
-    results_dict = model.evaluate(train, verbose=0, return_dict=True)
+    results_dict = model.model.evaluate(train, verbose=0, return_dict=True)
 
     print(results_dict)
 
     results_dict.update(model_history)
-
+    print(results_dict.keys())
     # results_dict["history_training"] = history_training
     # results_dict["history_finetuning"] = history_finetuning
 
     return model, results_dict
 
 
-def evaluate_model(
-    model: tf.keras.Model,
-    csv_test_path: str,
-    image_path: str,
-    target: str,
-) -> dict:
-    """Evaluate model with test set data.
-
-    Args:
-        model (tf.keras.Model): trained model
-        csv_test_path (str): path to dataframe containing the file names of the test images
-        image_path (str): path to the folder containing all of the images
-        target (str): name of the column with images labels in a csv file
-    """
-    test = csv_to_image_data_gen(csv_test_path, image_path, target)
-    results_dict = model.evaluate(test, verbose=0, return_dict=True)
-    print(results_dict)
-    return results_dict
-
-
 def main() -> None:
     """Train the model, save it and its training history (train loss and accuracy per iteration)."""
     model, results_dict = train_model(
-        model_type="tinymodel",
+        model_type=GlobalParams.MODEL_TYPE,
         csv_train_path=os.path.join(PREPROCESS_DIRECTORY, "train.csv"),
         csv_valid_path=os.path.join(PREPROCESS_DIRECTORY, "valid.csv"),
         image_path="Paths",
         target="Labels",
     )
 
-    save_model(model, os.path.join(SAVE_MODEL, MODEL_NAME))
+    save_model(model.model, os.path.join(SAVE_MODEL, MODEL_NAME))
 
     save_history(results_dict["history_training"].history, SAVE_MODEL, TRAIN_HISTORY)
     save_history(results_dict["history_finetuning"].history, SAVE_MODEL, TUNE_HISTORY)

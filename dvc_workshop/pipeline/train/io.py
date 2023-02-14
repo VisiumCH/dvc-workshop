@@ -1,7 +1,6 @@
 """Module for loading images and labels from csv file."""
 
 import os
-from typing import Dict
 
 import pandas as pd
 import tensorflow as tf
@@ -22,7 +21,7 @@ def save_model(model: tf.keras.Model, save_path: str) -> None:
     model.save(f"{save_path}")
 
 
-def save_history(history: Dict, save_path: str, title: str) -> None:
+def save_history(history: dict, save_path: str, title: str) -> None:
     """Save model history for plot step.
 
     Args:

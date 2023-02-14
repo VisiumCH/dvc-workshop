@@ -4,6 +4,7 @@
 class GlobalParams:
     """Global parameters."""
 
+    MODEL_TYPE = "tinymodel"
     DEBUG = True
 
 

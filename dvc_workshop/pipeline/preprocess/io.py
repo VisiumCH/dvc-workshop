@@ -20,7 +20,7 @@ def read_images(source_directory: str) -> List[str]:
     Returns:
         List[str]: list of images
     """
-    return glob.glob(source_directory + "/**/*.jpg", recursive=True)
+    return glob.glob(source_directory + "/**/*.png", recursive=True)
 
 
 def save_images(images: Iterable[str], target_directory: str) -> None:
@@ -42,16 +42,18 @@ def generate_dataset(source_file: str, images_directory: str, target_directory: 
     """Generates stratified  train test and validation csv files from the dataset."""
     path_labels_df = pd.read_csv(
         os.path.join(source_file, "train.csv"),
-        usecols=["Id", "Genre"],
-        converters={"Genre": ast.literal_eval},
+        usecols=["Labels", "Paths"],
     )
-    path_labels_df = path_labels_df[["Id", "Genre"]]
-    path_labels_df.columns = ["Paths", "Labels"]
-    path_labels_df["Paths"] = images_directory + "/" + path_labels_df["Paths"] + ".jpg"
-
-    if GlobalParams.DEBUG:
-        path_labels_df = path_labels_df.sample(n=2000, random_state=42)
-
+    # path_labels_df = path_labels_df[["Id", "Genre"]]
+    # path_labels_df.columns = ["Paths", "Labels"]
+    path_labels_df["Paths"] = (
+        images_directory + "/" + (path_labels_df["Paths"]).str.split("/", expand=True).iloc[:, -1] + ".jpg"
+    )
+    print(path_labels_df.head())
+    # if GlobalParams.DEBUG:
+    #     path_labels_df = path_labels_df.sample(n=2000, random_state=42)
+    path_labels_df["Labels"] = path_labels_df["Labels"].apply(lambda x: [x])
+    print(path_labels_df.info())
     train, test, valid = perform_stratification(path_labels_df, 0.3, 0.8, 1)
 
     train.to_csv(os.path.join(target_directory, "train.csv"), index=False)

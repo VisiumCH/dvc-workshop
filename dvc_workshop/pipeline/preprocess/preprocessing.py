@@ -29,11 +29,13 @@ def main() -> None:
     def _resize_image(images: list[str], img_size: tuple[int, int], target_directory: Path) -> None:
         """Resize all of the images to desired output size."""
         # pylint: disable=no-member
+        print(images)
         for image_path in tqdm(images):
             image = cv2.imread(image_path)
             image_resized = cv2.resize(image, dsize=img_size)
-            # print("PATH:", Path(target_directory) / image_path.split("/")[-1])
-            cv2.imwrite(filename=str(Path(target_directory) / image_path.split("/")[-1]), img=image_resized)
+
+            # print("PATH:", Path(target_directory) / str(image_path).split("/")[-1])
+            cv2.imwrite(filename=str(Path(target_directory) / str(image_path).split("/")[-1]), img=image_resized)
 
     _resize_image(images, img_size=(28, 28), target_directory=TARGET_DIRECTORY)
 

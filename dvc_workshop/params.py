@@ -21,7 +21,7 @@ class ModelParams:
 
     IMAGE_HEIGHT = 256
     IMAGE_WIDTH = 256
-    NUMBER_CHANNELS = 3
+    NUMBER_CHANNELS = 1
     POOLING = "max"
     ACTIVATION = "sigmoid"
     TOP = False

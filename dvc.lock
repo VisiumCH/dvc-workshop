@@ -8,8 +8,8 @@ stages:
       size: 313484
       nfiles: 1001
     - path: dvc_workshop/pipeline/preprocess
-      md5: cd4fb1e81c6424b45a70a514a7f042dc.dir
-      size: 20536
+      md5: f49c4165958b0bbee77ee0493d2174a6.dir
+      size: 20584
       nfiles: 10
     params:
       dvc_workshop/params.py:
@@ -36,8 +36,8 @@ stages:
       size: 666655
       nfiles: 1003
     - path: dvc_workshop/pipeline/train
-      md5: e048eca0ca29491e8004bc2d2f730e50.dir
-      size: 10482
+      md5: 271b7291800492c53528c5848ef6b716.dir
+      size: 10587
       nfiles: 8
     params:
       dvc_workshop/params.py:
@@ -59,8 +59,8 @@ stages:
           PATIENCE: 5
     outs:
     - path: data/train/
-      md5: 44e3b3a63f067089db2cecf01b0a02cb.dir
-      size: 1066843
+      md5: ed965a7eb74943cc20ca538358440290.dir
+      size: 1066567
       nfiles: 7
   evaluate:
     cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
@@ -70,8 +70,8 @@ stages:
       size: 666655
       nfiles: 1003
     - path: data/train
-      md5: 44e3b3a63f067089db2cecf01b0a02cb.dir
-      size: 1066843
+      md5: ed965a7eb74943cc20ca538358440290.dir
+      size: 1066567
       nfiles: 7
     - path: dvc_workshop/pipeline/evaluate/
       md5: e2dd5c834060f042328fa4543cde4048.dir
@@ -79,21 +79,21 @@ stages:
       nfiles: 8
     outs:
     - path: data/evaluate
-      md5: 400422da0387215b7d0a02ad88864ba3.dir
-      size: 187
+      md5: 94845190f890d04dd7d239b91396dfe3.dir
+      size: 185
       nfiles: 1
   plot:
     cmd: python -m dvc_workshop.pipeline.plot.ploting
     deps:
     - path: data/train/train_history.csv
-      md5: 3903a22ad906c10b8f7221be0242c577
-      size: 5695
+      md5: e6e44cf8682b6ac476e1597bc43a8ce4
+      size: 5557
     - path: dvc_workshop/pipeline/plot
       md5: 09f56012aa00e7fbfcdc2053e68ddcf0.dir
       size: 8029
       nfiles: 7
     outs:
     - path: data/plot
-      md5: 64e575c19e158f85d5629b959a41d9db.dir
-      size: 180017
+      md5: 23509439a23f7a6db5209f546bf918d3.dir
+      size: 187393
       nfiles: 1

@@ -1,5 +1,4 @@
 """IO module for the preprocessing step."""
-import ast
 import glob
 import os
 import shutil
@@ -7,7 +6,6 @@ from typing import Iterable, List
 
 import pandas as pd
 
-from dvc_workshop.params import GlobalParams
 from dvc_workshop.pipeline.preprocess.utils import create_path, perform_stratification
 
 
@@ -20,7 +18,9 @@ def read_images(source_directory: str) -> List[str]:
     Returns:
         List[str]: list of images
     """
-    return glob.glob(source_directory + "/**/*.png", recursive=True)
+    return glob.glob(source_directory + "/**/*.png", recursive=True) + glob.glob(
+        source_directory + "/**/*.jpg", recursive=True
+    )
 
 
 def save_images(images: Iterable[str], target_directory: str) -> None:

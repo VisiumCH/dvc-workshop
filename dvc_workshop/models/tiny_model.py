@@ -15,6 +15,8 @@ class TinyModel(tf.keras.Model):
         image_height: int,
         image_width: int,
         channels: int,
+        activation: str,
+        class_indices: dict,
     ):  # pylint: disable=R0913
         super().__init__()
 
@@ -36,7 +38,10 @@ class TinyModel(tf.keras.Model):
         self.model.add(Flatten())
         self.model.add(Dense(64, activation="relu"))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(10, activation="softmax"))
+
+        # output layer
+        self.model.add(Dense(len(class_indices), activation=activation))
+        print(f"Current model has {self.model.count_params()} params.")
 
         print(self.model.summary())
 
@@ -67,3 +72,17 @@ class TinyModel(tf.keras.Model):
         )
 
         return {"history_training": history_training, "history_finetuning": history_training}
+
+    def call(self, inputs: tf.Tensor) -> tf.Tensor:  # pylint: disable=W0221
+        """Override call function, forward pass.
+
+        Args:
+            inputs (tf.Tensor): model input
+        Returns:
+            tf.Tensor: model multilabel prediction
+        """
+        return self.model(inputs)
+
+    def evaluate(self, train: ImageDataGenerator, verbose: str, return_dict: bool) -> dict:  # pylint: disable=W0221
+        """Wrapper to evaluate the model."""
+        return self.model.evaluate(train, verbose=verbose, return_dict=return_dict)

@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 
-from dvc_workshop.params import PreprocessParams
+from dvc_workshop.params import ModelParams, PreprocessParams
 from dvc_workshop.pipeline.preprocess.constants import (
     PREPROCESS_DIRECTORY,
     RAW_DIRECTORY,
@@ -35,9 +35,13 @@ def main() -> None:
             image_resized = cv2.resize(image, dsize=img_size)
 
             # print("PATH:", Path(target_directory) / str(image_path).split("/")[-1])
-            cv2.imwrite(filename=str(Path(target_directory) / str(image_path).split("/")[-1]), img=image_resized)
+            cv2.imwrite(
+                filename=str(Path(target_directory) / str(image_path).split("/", maxsplit=1)[-1]), img=image_resized
+            )
 
-    _resize_image(images, img_size=(28, 28), target_directory=TARGET_DIRECTORY)
+    _resize_image(
+        images, img_size=(ModelParams.IMAGE_HEIGHT, ModelParams.IMAGE_WIDTH), target_directory=TARGET_DIRECTORY
+    )
 
     # generate train, val, test labels
     generate_dataset(RAW_DIRECTORY, TARGET_DIRECTORY, PREPROCESS_DIRECTORY)

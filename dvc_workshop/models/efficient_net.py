@@ -53,7 +53,7 @@ class EfficientNet(tf.keras.Model):
 
     def train(self, train: ImageDataGenerator, val: ImageDataGenerator, trainingparams: TrainingParams) -> dict:
         """Train the classification head, then finetune the model."""
-        return train_efficient_net(self.model, train, val, trainingparams)
+        return train_efficient_net(self, train, val, trainingparams)
 
 
 class EfficientNetSmall(tf.keras.Model):
@@ -104,7 +104,7 @@ class EfficientNetSmall(tf.keras.Model):
 
     def train(self, train: ImageDataGenerator, val: ImageDataGenerator, trainingparams: TrainingParams) -> dict:
         """Train the classification head, then finetune the model."""
-        return train_efficient_net(self.model, train, val, trainingparams)
+        return train_efficient_net(self, train, val, trainingparams)
 
 
 def train_efficient_net(
@@ -118,6 +118,7 @@ def train_efficient_net(
             tf.keras.metrics.Precision(),
             tf.keras.metrics.Recall(),
             tf.keras.metrics.BinaryAccuracy(),
+            tf.keras.metrics.CategoricalAccuracy(),
         ],
     )
 
@@ -139,6 +140,7 @@ def train_efficient_net(
             tf.keras.metrics.Precision(),
             tf.keras.metrics.Recall(),
             tf.keras.metrics.BinaryAccuracy(),
+            tf.keras.metrics.CategoricalAccuracy(),
         ],
     )
 

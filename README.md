@@ -153,3 +153,10 @@ To manually create a step, you can use:
 ```
 dvc add stage -n <stage name> -d <dependencies> -p <parameters> -o <outputs> cmd
 ```
+
+
+## Other
+
+```bash
+python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path "data/raw/Images" --output-df-path "data/raw"
+```

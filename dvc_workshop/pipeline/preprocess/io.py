@@ -1,57 +1,52 @@
 """IO module for the preprocessing step."""
-import ast
 import glob
 import os
-import shutil
-from typing import Iterable, List
+from pathlib import Path
 
+import cv2
 import pandas as pd
 
-from dvc_workshop.params import GlobalParams
-from dvc_workshop.pipeline.preprocess.utils import create_path, perform_stratification
+from dvc_workshop.pipeline.preprocess.utils import perform_stratification
 
 
-def read_images(source_directory: str) -> List[str]:
+def read_images(source_directory: str) -> dict:
     """Simple function to showcase reading data from io.
 
     Args:
         source_directory (str): source iamges directory
 
     Returns:
-        List[str]: list of images
+        dict: dict where the key is the path and the value is the image
     """
-    return glob.glob(source_directory + "/**/*.jpg", recursive=True)
+    # pylint: disable=no-member
+    image_paths = glob.glob(source_directory + "/**/*.png", recursive=True) + glob.glob(
+        source_directory + "/**/*.jpg", recursive=True
+    )
+    images = {}
+    for image_path in image_paths:
+        images[image_path] = cv2.imread(image_path)
+    return images
 
 
-def save_images(images: Iterable[str], target_directory: str) -> None:
-    """Simple function to create directory and save the images there.
-
-    Args:
-        images (Iterable[str]): Image paths
-        target_directory (str): Destination directory
-    """
-    create_path(target_directory)
-
-    # copy selected images
-    for img in images:
-        if not os.path.isfile(os.path.join(target_directory, img)):
-            shutil.copy(img, target_directory)
+def save_images(images: dict, target_directory: Path) -> None:
+    """Save the images to disk."""
+    # pylint: disable=no-member, use-maxsplit-arg
+    for image_path, image in images.items():
+        cv2.imwrite(filename=str(Path(target_directory) / str(image_path).split("/")[-1]), img=image)
 
 
 def generate_dataset(source_file: str, images_directory: str, target_directory: str) -> None:
     """Generates stratified  train test and validation csv files from the dataset."""
     path_labels_df = pd.read_csv(
         os.path.join(source_file, "train.csv"),
-        usecols=["Id", "Genre"],
-        converters={"Genre": ast.literal_eval},
+        usecols=["Labels", "Paths"],
     )
-    path_labels_df = path_labels_df[["Id", "Genre"]]
-    path_labels_df.columns = ["Paths", "Labels"]
-    path_labels_df["Paths"] = images_directory + "/" + path_labels_df["Paths"] + ".jpg"
 
-    if GlobalParams.DEBUG:
-        path_labels_df = path_labels_df.sample(n=2000, random_state=42)
+    path_labels_df["Paths"] = images_directory + "/" + (path_labels_df["Paths"]).str.split("/", expand=True).iloc[:, -1]
+    print(path_labels_df.head())
 
+    path_labels_df["Labels"] = path_labels_df["Labels"].apply(lambda x: [x])
+    print(path_labels_df.info())
     train, test, valid = perform_stratification(path_labels_df, 0.3, 0.8, 1)
 
     train.to_csv(os.path.join(target_directory, "train.csv"), index=False)

@@ -19,48 +19,31 @@ class TinyModel(tf.keras.Model):
         class_indices: dict,
     ):  # pylint: disable=R0913
         super().__init__()
-        # initiate model classes
-        self.class_indices = class_indices
 
         self.model = Sequential()
         # input layer
         self.model.add(
-            Conv2D(8, kernel_size=(7, 7), activation="relu", input_shape=(image_height, image_width, channels))
+            Conv2D(16, kernel_size=(7, 7), activation="relu", input_shape=(image_height, image_width, channels))
         )
-        self.model.add(Conv2D(16, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(32, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         self.model.add(Dropout(0.25))
 
-        self.model.add(Conv2D(16, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
-        self.model.add(Conv2D(16, kernel_size=(3, 3), activation="relu"))
+        self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         self.model.add(Dropout(0.25))
 
         self.model.add(Flatten())
-        self.model.add(Dense(20, activation="relu"))
+        self.model.add(Dense(64, activation="relu"))
         self.model.add(Dropout(0.5))
+
         # output layer
         self.model.add(Dense(len(class_indices), activation=activation))
         print(f"Current model has {self.model.count_params()} params.")
 
-    def call(self, inputs: tf.Tensor) -> tf.Tensor:  # pylint: disable=W0221
-        """Override call function, forward pass.
-
-        Args:
-            inputs (tf.Tensor): model input
-        Returns:
-            tf.Tensor: model multilabel prediction
-        """
-        return self.model(inputs)
-
-    def set_trainable(self, trainable: bool = True) -> None:
-        """Freeze/unfreeze feature extractor layers.
-
-        Args:
-            trainable (bool, optional):  Defaults to True.
-        """
-        self.base_model.trainable = trainable
+        print(self.model.summary())
 
     def train(self, train: ImageDataGenerator, val: ImageDataGenerator, trainingparams: TrainingParams) -> dict:
         """Train the classification head, then finetune the model."""
@@ -68,11 +51,15 @@ class TinyModel(tf.keras.Model):
         # load the model
         self.model.compile(
             optimizer=tf.keras.optimizers.Adam(),
-            loss=tf.keras.losses.BinaryCrossentropy(),
+            loss=tf.keras.losses.CategoricalCrossentropy(
+                name="categorical_crossentropy",
+                from_logits=True,
+            ),
             metrics=[
                 tf.keras.metrics.Precision(),
                 tf.keras.metrics.Recall(),
                 tf.keras.metrics.BinaryAccuracy(),
+                tf.keras.metrics.CategoricalAccuracy(),
             ],
         )
 
@@ -85,3 +72,17 @@ class TinyModel(tf.keras.Model):
         )
 
         return {"history_training": history_training, "history_finetuning": history_training}
+
+    def call(self, inputs: tf.Tensor) -> tf.Tensor:  # pylint: disable=W0221
+        """Override call function, forward pass.
+
+        Args:
+            inputs (tf.Tensor): model input
+        Returns:
+            tf.Tensor: model multilabel prediction
+        """
+        return self.model(inputs)
+
+    def evaluate(self, train: ImageDataGenerator, verbose: str, return_dict: bool) -> dict:  # pylint: disable=W0221
+        """Wrapper to evaluate the model."""
+        return self.model.evaluate(train, verbose=verbose, return_dict=return_dict)

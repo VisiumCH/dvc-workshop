@@ -1,18 +1,18 @@
 """Preprocessing module."""
-from pathlib import Path
+import logging
 
 import cv2
 import numpy as np
 from tqdm import tqdm
 
-from dvc_workshop.params import PreprocessParams
+from dvc_workshop.params import ModelParams
 from dvc_workshop.pipeline.preprocess.constants import (
     PREPROCESS_DIRECTORY,
     RAW_DIRECTORY,
     SOURCE_DIRECTORY,
     TARGET_DIRECTORY,
 )
-from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images
+from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images, save_images
 from dvc_workshop.pipeline.preprocess.utils import create_path
 
 
@@ -22,55 +22,89 @@ def main() -> None:
     # read image data
     images = read_images(SOURCE_DIRECTORY)
 
-    # filter on color content
-    # color_filtered = filter(color_detector, images)
-
     # Resize images
-    def _resize_image(images: list[str], img_size: tuple[int, int], target_directory: Path) -> None:
-        """Resize all of the images to desired output size."""
-        # pylint: disable=no-member
-        for image_path in tqdm(images):
-            image = cv2.imread(image_path)
-            image_resized = cv2.resize(image, dsize=img_size)
-            # print("PATH:", Path(target_directory) / image_path.split("/")[-1])
-            cv2.imwrite(filename=str(Path(target_directory) / image_path.split("/")[-1]), img=image_resized)
+    images = resize_image(images, img_size=(ModelParams.IMAGE_HEIGHT, ModelParams.IMAGE_WIDTH))
 
-    _resize_image(images, img_size=(28, 28), target_directory=TARGET_DIRECTORY)
+    # Resize the images
+    images = standardize(images)
+
+    # Rotate and crop the images
+    images = rotate_and_crop_images(images, angle_interval=(-5, 5))
+
+    # Save the images
+    save_images(images, target_directory=TARGET_DIRECTORY)
 
     # generate train, val, test labels
     generate_dataset(RAW_DIRECTORY, TARGET_DIRECTORY, PREPROCESS_DIRECTORY)
 
 
-def color_detector(image_path: str) -> np.ndarray:
-    """Detects if poster image contains pixel content of given color above threshold.
-
-    Args:
-        image_path (str): path to image
-
-    Returns:
-        np.ndarray: colored pixel proportion against threshold
-    """
+def resize_image(images: dict, img_size: tuple[int, int]) -> None:
+    """Resize all of the images to desired output size."""
     # pylint: disable=no-member
-    # read image
-    image = cv2.imread(image_path)
-    # lower bound for red color
-    lower_red = np.array(PreprocessParams.LOWER_BOUND_COLOR, dtype="uint8")
-    # upper bound for red color
-    upper_red = np.array(PreprocessParams.UPPER_BOUND_COLOR, dtype="uint8")
-    # detect pixels in red range
-    mask = cv2.inRange(image, lower_red, upper_red)
-    # keep pixels in the range
-    detected_output = cv2.bitwise_and(image, image, mask=mask)
-    # sum total number of red pixels
-    sum_red = np.sum(detected_output, axis=2)
-    # count non zeros
-    red_pixel = np.count_nonzero(sum_red)
-    # get total number of pixel
-    total_pixels = detected_output.size
-    # get proportion of detected pixel
-    amount_detected = np.round(red_pixel / total_pixels, 5)
-    # return bool comparison with threshold
-    return amount_detected < PreprocessParams.THRESHOLD
+    for image_path, image in tqdm(images.items()):
+        images[image_path] = cv2.resize(image, dsize=img_size)
+
+    return images
+
+
+def standardize(images: dict, tolerance: float = 1e-5) -> dict:
+    """Standardize the input images."""
+    # pylint: disable=no-member
+    stacked_images = np.stack(images.values(), axis=0)
+    std = stacked_images.std()
+    mean = stacked_images.mean()
+
+    if std > tolerance:
+        for image_path, image in tqdm(images.items()):
+            images[image_path] = (image - mean) / std
+    else:
+        logging.warning("Standard deviation too small, we will only substract the mean.")
+        for image_path, image in tqdm(images.items()):
+            images[image_path] = image - mean
+
+    return images
+
+
+def rotate_and_crop_images(images: dict, angle_interval: tuple[float, float]) -> dict:
+    """Rotate and center crop an image."""
+    # pylint: disable=no-member
+    def _rotate_image(image: np.array, angle: float) -> np.array:
+        """Rotate an image."""
+        image_center = tuple(np.array(image.shape[1::-1]) / 2)
+        rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+        result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+        return result
+
+    def _crop_image(image: np.array, width: int, height: int) -> np.array:
+        """Center crop an image to the desired dimension."""
+        center = image.shape
+        x = center[1] / 2 - width / 2
+        y = center[0] / 2 - height / 2
+
+        cropped_image = image[int(y) : int(y + height), int(x) : int(x + width)]
+        return cropped_image
+
+    for image_path, image in tqdm(images.items()):
+        image_shape = image.shape
+        (original_width, original_height) = image_shape[0], image_shape[1]
+
+        assert (original_width % 2 == 0) and (original_height % 2 == 0), "Image dimensions are not even!"
+
+        # rotate with random angle in angle_interval
+        random_angle = float(np.random.uniform(low=angle_interval[0], high=angle_interval[1], size=1))
+        rotated_image = _rotate_image(image, angle=random_angle)
+
+        # center crop
+        cropped_image = _crop_image(rotated_image, original_width, original_height)
+        cropped_image_shape = cropped_image.shape
+
+        assert (original_width == cropped_image_shape[0]) and (
+            original_height == cropped_image_shape[1]
+        ), "Image dimension changes after resize and crop!"
+
+        images[image_path] = cropped_image
+
+    return images
 
 
 if __name__ == "__main__":

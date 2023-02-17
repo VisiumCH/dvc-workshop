@@ -25,6 +25,17 @@ pandas = "*"
 numexpr = "*"
 bottleneck = "*"
 typer = "*"
+pathlib = "*"
+dvc-gs = "*"
+keras-preprocessing = "*"
+numpy = "*"
+scikit-image = "*"
+pillow = "*"
+opencv-python = "*"
+typing = "*"
+tensorflow = "*"
+visplotlib = "*"
+
 
 [dev-packages]
 black = "*"

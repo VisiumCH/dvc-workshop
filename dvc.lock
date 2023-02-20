@@ -16,3 +16,33 @@ stages:
       md5: c98421933dce5e8bd752c71ab177e9ea.dir
       size: 324484
       nfiles: 1001
+  preprocess:
+    cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
+    deps:
+    - path: data/download_mnist
+      md5: c98421933dce5e8bd752c71ab177e9ea.dir
+      size: 324484
+      nfiles: 1001
+    - path: dvc_workshop/pipeline/preprocess/
+      md5: a04de5ef5237d86966b5ab82077f18de.dir
+      size: 11511
+      nfiles: 5
+    params:
+      params.py:
+        PreprocessParams:
+          LOWER_BOUND_COLOR:
+          - 0
+          - 0
+          - 200
+          UPPER_BOUND_COLOR:
+          - 0
+          - 0
+          - 255
+          THRESHOLD: 0.005
+          IMAGE_HEIGHT: 28
+          IMAGE_WIDTH: 28
+    outs:
+    - path: data/preprocess
+      md5: baf5c5caf34fcd89695dcb1d3937dc83.dir
+      size: 330531
+      nfiles: 1003

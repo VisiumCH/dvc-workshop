@@ -5,7 +5,6 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 
-from dvc_workshop.params import ModelParams
 from dvc_workshop.pipeline.preprocess.constants import (
     PREPROCESS_DIRECTORY,
     RAW_DIRECTORY,
@@ -14,6 +13,7 @@ from dvc_workshop.pipeline.preprocess.constants import (
 )
 from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images, save_images
 from dvc_workshop.pipeline.preprocess.utils import create_path
+from params import PreprocessParams
 
 
 def main() -> None:
@@ -23,10 +23,10 @@ def main() -> None:
     images = read_images(SOURCE_DIRECTORY)
 
     # Resize images
-    images = resize_image(images, img_size=(ModelParams.IMAGE_HEIGHT, ModelParams.IMAGE_WIDTH))
+    images = resize_image(images, img_size=(PreprocessParams.IMAGE_HEIGHT, PreprocessParams.IMAGE_WIDTH))
 
-    # standardize: insert code here
-
+    # standardize:
+    images = standardize(images)
     # Rotate and crop the images
     images = rotate_and_crop_images(images, angle_interval=(-5, 5))
 
@@ -47,22 +47,21 @@ def resize_image(images: dict, img_size: tuple[int, int]) -> None:
 
 
 def standardize(images: dict, tolerance: float = 1e-5) -> dict:
-    """Standardize the input images.
-
-    images is a dictionnary, keys being str paths to image and value the image array
-
-    - Standardize stacked images if the standard deviation is above threshold
-    - if not, substract the mean
-
-
-    """
+    """Standardize the input images."""
     # pylint: disable=no-member
     stacked_images = np.stack(images.values(), axis=0)
     std = stacked_images.std()
     mean = stacked_images.mean()
 
-    ############# CODE HERE #############
-    raise NotImplementedError("Code standardization function here")
+    if std > tolerance:
+        for image_path, image in tqdm(images.items()):
+            images[image_path] = (image - mean) / std
+    else:
+        logging.warning("Standard deviation too small, we will only substract the mean.")
+        for image_path, image in tqdm(images.items()):
+            images[image_path] = image - mean
+
+    return images
 
 
 def rotate_and_crop_images(images: dict, angle_interval: tuple[float, float]) -> dict:

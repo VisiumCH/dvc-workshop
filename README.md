@@ -251,7 +251,7 @@ dvc repro
 This reproduces the steps in order accounting for changes if any. 
 
 Last but not least, dependencies, parameters and outputs in the pipeline are automatically versioned (no need to run ```dvc add <file>```) upon execution. The last step will be to push the generated hashes back to the remote we set up! 
-ß
+
 #### E. Time to exercise:
 
 It is TIME. 
@@ -267,4 +267,43 @@ and then push the resulting files to the remote.
 We have already implemented the code structure for loading data, rotating and cropping in ___dvc_workshop/pipeline/preprocess.py___. Standardization was left empty intentionnaly for you to fill it.
 
 
-Remember to have a look a at the DAG once you have created your pipeline.ß
+Remember to have a look a at the DAG once you have created your pipeline.
+
+---
+
+## 3. Training step: 
+
+In this step, you are going to be implementing and training a small multilabel classification model.
+
+The idea is to understand how DVC handles the execution of the steps as they grow more numerous. 
+
+For that, your first task will be to complete the forward pass of a simple convoltuional model. You can find the instructions for that in the comment section of ___dvc_workshop/models/classifier.py___. 
+
+We have implemented for you the complete training procedure under ___dvc_workshop/pipeline/train/training.py___. 
+
+As you might have guessed, your task will be to implement the training dvc step. You should have a look at the files above as well as some of their dependencies to figure out the different elements of your step. 
+
+At the end, your dag should look like the following:
+
+<pre>
++----------------+ 
+| download_mnist | 
++----------------+ 
+         *         
+         *         
+         *         
+  +------------+   
+  | preprocess |   
+  +------------+   
+         *         
+         *         
+         *         
+    +-------+      
+    | train |      
+    +-------+   
+ </pre>
+
+Don't forget to push the output of this step hashes to the remote. 
+
+Also, you can play around to better understand DVC's functionning for instance by deleting the local preprocess data and pulling it again from the remote. You can also rerun the pipeline after that, or modify some of the files before running it.
+

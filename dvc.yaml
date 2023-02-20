@@ -7,3 +7,13 @@ stages:
     - gs://dvc-workshop-raw/mnist
     outs:
     - data/download_mnist
+  preprocess:
+    cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
+    deps:
+    - data/download_mnist
+    - dvc_workshop/pipeline/preprocess/
+    params:
+    - params.py:
+      - PreprocessParams
+    outs:
+    - data/preprocess

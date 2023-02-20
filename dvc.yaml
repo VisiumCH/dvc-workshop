@@ -3,7 +3,7 @@ stages:
     cmd: python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path data/download_mnist/Images
       --output-df-path data/download_mnist
     deps:
-    - dvc_workshop/utils/generate_mnist_dataset
+    - dvc_workshop/utils/generate_mnist_dataset.py
     - gs://dvc-workshop-raw/mnist
     outs:
     - data/download_mnist

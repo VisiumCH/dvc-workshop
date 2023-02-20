@@ -35,7 +35,7 @@ opencv-python = "*"
 typing = "*"
 tensorflow = "*"
 visplotlib = "*"
-
+iterative-stratification = "*"
 
 [dev-packages]
 black = "*"

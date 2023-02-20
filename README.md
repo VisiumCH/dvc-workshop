@@ -251,12 +251,12 @@ dvc repro
 This reproduces the steps in order accounting for changes if any. 
 
 Last but not least, dependencies, parameters and outputs in the pipeline are automatically versioned (no need to run ```dvc add <file>```) upon execution. The last step will be to push the generated hashes back to the remote we set up! 
-ß
+
 #### E. Time to exercise:
 
 It is TIME. 
 
-In this part, the objective is create a dvc preprocess step that: 
+In this part, the objective is to create a dvc preprocess step that: 
 
 1. loads data from previously downloaded
 2. applies standardization, some roatation and cropping
@@ -267,4 +267,4 @@ and then push the resulting files to the remote.
 We have already implemented the code structure for loading data, rotating and cropping in ___dvc_workshop/pipeline/preprocess.py___. Standardization was left empty intentionnaly for you to fill it.
 
 
-Remember to have a look a at the DAG once you have created your pipeline.ß
+Remember to have a look a at the DAG once you have created your pipeline.

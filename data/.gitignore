@@ -1,3 +1,4 @@
 /download_mnist
 /preprocess
 /train
+/evaluate

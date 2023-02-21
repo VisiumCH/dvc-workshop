@@ -29,7 +29,10 @@ def evaluate_model(
         target (str): name of the column with images labels in a csv file
     """
     ############## CODE HERE ##############
-    raise NotImplementedError("Implement evaluation here")
+    test = csv_to_image_data_gen(csv_test_path, image_path, target)
+    results_dict = model.evaluate(test, verbose=0, return_dict=True)
+    print(results_dict)
+    return results_dict
 
 
 def main() -> None:

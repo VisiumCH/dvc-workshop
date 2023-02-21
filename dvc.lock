@@ -54,8 +54,8 @@ stages:
       size: 330531
       nfiles: 1003
     - path: dvc_workshop/pipeline/train
-      md5: 8a2216241a68120680f4551c812f1318.dir
-      size: 3972
+      md5: 8a08a3ce7bed0d5c92d0297d7fd6d758.dir
+      size: 3943
       nfiles: 4
     params:
       params.py:
@@ -80,6 +80,35 @@ stages:
           IMAGE_WIDTH: 28
     outs:
     - path: data/train
-      md5: a7c57716cc4027c4d0923860a461169e.dir
-      size: 1065122
+      md5: b9278087c71db701f28a160a03cfeba4.dir
+      size: 1067003
       nfiles: 7
+  evaluate:
+    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
+    deps:
+    - path: data/preprocess/
+      md5: baf5c5caf34fcd89695dcb1d3937dc83.dir
+      size: 330531
+      nfiles: 1003
+    - path: data/train
+      md5: b9278087c71db701f28a160a03cfeba4.dir
+      size: 1067003
+      nfiles: 7
+    - path: dvc_workshop/pipeline/evaluate/
+      md5: f7bb5e01ed2edebe99c5287ba247a975.dir
+      size: 2521
+      nfiles: 4
+    params:
+      params.py:
+        ModelParams:
+          MODEL_NAME: classifier
+          COLOR_TYPE: grayscale
+          NUMBER_CHANNELS: 1
+          POOLING: max
+          ACTIVATION: softmax
+          TOP: false
+    outs:
+    - path: data/evaluate
+      md5: ee3672b697a2b3f43d60e4343c560b6f.dir
+      size: 186
+      nfiles: 1

@@ -314,3 +314,13 @@ Also, you can play around to better understand DVC's functionning for instance b
 You should now have successfully trained your classifier and have it saved along with training history. Let's evaluate the model on the test set you generated earlier. 
 
 Once again, your job here is to complete the code snipet in __dvc_workshop/pipeline/evaluate.py__ and right down the DVC step accordingly. Make sure to include all dependencies :-). 
+
+---
+
+## 4. Plotting step:
+
+In this part you are free to set up a plotting step from scratch. No particular code is provided but your job nonetheless remains the same. That is leverage DVC while respecting the code architecture to implement a new step in the pipeline. Objective for you will plot the __training__ and __tuning__ history. The resulting plots should be saved in the same maner other steps did. 
+
+Remeber to look at existing functions to leverage and to push your results to the remote. 
+
+

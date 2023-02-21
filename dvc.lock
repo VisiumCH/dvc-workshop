@@ -95,8 +95,8 @@ stages:
       size: 1067003
       nfiles: 7
     - path: dvc_workshop/pipeline/evaluate/
-      md5: f7bb5e01ed2edebe99c5287ba247a975.dir
-      size: 2521
+      md5: 1e0c6fdf3783e29f93f1947e58564deb.dir
+      size: 2522
       nfiles: 4
     params:
       params.py:
@@ -111,4 +111,20 @@ stages:
     - path: data/evaluate
       md5: ee3672b697a2b3f43d60e4343c560b6f.dir
       size: 186
+      nfiles: 1
+  plot:
+    cmd: python -m dvc_workshop.pipeline.plot.plotting
+    deps:
+    - path: data/train
+      md5: b9278087c71db701f28a160a03cfeba4.dir
+      size: 1067003
+      nfiles: 7
+    - path: dvc_workshop/pipeline/plot
+      md5: 2c3935cb716f31bdb3e37c8ee3d4635e.dir
+      size: 3243
+      nfiles: 3
+    outs:
+    - path: data/plot
+      md5: 4e91723c1c90884fee3476501379bc51.dir
+      size: 222069
       nfiles: 1

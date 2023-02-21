@@ -39,3 +39,10 @@ stages:
       - ModelParams
     outs:
     - data/evaluate
+  plot:
+    cmd: python -m dvc_workshop.pipeline.plot.plotting
+    deps:
+    - data/train
+    - dvc_workshop/pipeline/plot
+    outs:
+    - data/plot

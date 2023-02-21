@@ -83,23 +83,3 @@ stages:
       md5: a7c57716cc4027c4d0923860a461169e.dir
       size: 1065122
       nfiles: 7
-  evaluate:
-    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
-    deps:
-    - path: data/preprocess/
-      md5: baf5c5caf34fcd89695dcb1d3937dc83.dir
-      size: 330531
-      nfiles: 1003
-    - path: data/train
-      md5: a7c57716cc4027c4d0923860a461169e.dir
-      size: 1065122
-      nfiles: 7
-    - path: dvc_workshop/pipeline/evaluate/
-      md5: e34c4254914ca176a3f1634796ee76fb.dir
-      size: 2335
-      nfiles: 4
-    outs:
-    - path: data/evaluate
-      md5: 285fbb1a38063911e4edd05d5b552372.dir
-      size: 184
-      nfiles: 1

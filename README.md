@@ -313,4 +313,4 @@ Also, you can play around to better understand DVC's functionning for instance b
 
 You should now have successfully trained your classifier and have it saved along with training history. Let's evaluate the model on the test set you generated earlier. 
 
-Once again, your job here is to complete the code snipet in __dvc_workshop/pipeline/evaluate.py__ and right down the DVC step accordingly. 
+Once again, your job here is to complete the code snipet in __dvc_workshop/pipeline/evaluate.py__ and right down the DVC step accordingly. Make sure to include all dependencies :-). 

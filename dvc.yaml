@@ -17,3 +17,22 @@ stages:
       - PreprocessParams
     outs:
     - data/preprocess
+  train:
+    cmd: python -m dvc_workshop.pipeline.train.training
+    deps:
+    - data/preprocess
+    - dvc_workshop/pipeline/train
+    params:
+    - params.py:
+      - ModelParams
+      - PreprocessParams
+    outs:
+    - data/train
+  evaluate:
+    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
+    deps:
+    - data/preprocess/
+    - data/train
+    - dvc_workshop/pipeline/evaluate/
+    outs:
+    - data/evaluate

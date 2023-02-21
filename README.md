@@ -307,3 +307,10 @@ Don't forget to push the output of this step hashes to the remote.
 
 Also, you can play around to better understand DVC's functionning for instance by deleting the local preprocess data and pulling it again from the remote. You can also rerun the pipeline after that, or modify some of the files before running it.
 
+---
+
+## 4. Evaluation step: 
+
+You should now have successfully trained your classifier and have it saved along with training history. Let's evaluate the model on the test set you generated earlier. 
+
+Once again, your job here is to complete the code snipet in __dvc_workshop/pipeline/evaluate.py__ and right down the DVC step accordingly. 

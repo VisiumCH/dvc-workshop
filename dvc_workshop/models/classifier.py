@@ -49,7 +49,21 @@ class Classifier(tf.keras.Model):
         self.model.add(Dropout(0.25))
 
         ############## CODE HERE ##############
-        raise NotImplementedError("Model forward pass here")
+        self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(Dropout(0.25))
+
+        self.model.add(Flatten())
+        self.model.add(Dense(64, activation="relu"))
+        self.model.add(Dropout(0.5))
+
+        # output layer
+        self.model.add(Dense(len(class_indices), activation=activation))
+        print(f"Current model has {self.model.count_params()} params.")
+
+        print(self.model.summary())
 
     def train(self, train: ImageDataGenerator, val: ImageDataGenerator, trainingparams: TrainingParams) -> dict:
         """Train the classification head, then finetune the model."""

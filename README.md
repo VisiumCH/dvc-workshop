@@ -317,7 +317,7 @@ Once again, your job here is to complete the code snipet in __dvc_workshop/pipel
 
 ---
 
-## 4. Plotting step:
+## 5. Plotting step:
 
 In this part you are free to set up a plotting step from scratch. No particular code is provided but your job nonetheless remains the same. That is leverage DVC while respecting the code architecture to implement a new step in the pipeline. Objective for you will plot the __training__ and __tuning__ history. The resulting plots should be saved in the same maner other steps did. 
 

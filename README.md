@@ -10,13 +10,12 @@ By the end of this workshop you will have learned how to :
 
 DVC architecture in the repo will also be tackled.
 
-This workshop features a movie poster classifier. The code originates from a synergie with another internal project. The model performs a multi-label image classification. 
+This workshop features a hand written digits image classifier. The model that performs this multi-label image classification is kept simple for the sake of focusing on the tool presented. 
 <p align="middle">
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpython-course.eu%2Fmachine-learning%2Ftraining-and-testing-with-mnist.php&psig=AOvVaw1DWjXN98JtoKNJmhvNcB3f&ust=1677230047239000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCTroSnq_0CFQAAAAAdAAAAABAS" width="100" />
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpython-course.eu%2Fmachine-learning%2Ftraining-and-testing-with-mnist.php&psig=AOvVaw1DWjXN98JtoKNJmhvNcB3f&ust=1677230047239000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCTroSnq_0CFQAAAAAdAAAAABAJ" width="100" /> 
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpython-course.eu%2Fmachine-learning%2Ftraining-and-testing-with-mnist.php&psig=AOvVaw1DWjXN98JtoKNJmhvNcB3f&ust=1677230047239000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCTroSnq_0CFQAAAAAdAAAAABAb" width="100" />
+  <img src="https://github.com/VisiumCH/dvc-workshop/data/sample_images/two.png" width="100" />
+  <img src="https://github.com/VisiumCH/dvc-workshop/data/sample_images/five.png" width="100" /> 
+  <img src="https://github.com/VisiumCH/dvc-workshop/data/sample_images/nine.png" width="100" />
 </p>
-Checkout the [repository](https://github.com/VisiumCH/image-classification-autotrain) of the project for more information.
 
 
 

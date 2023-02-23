@@ -10,13 +10,12 @@ By the end of this workshop you will have learned how to :
 
 DVC architecture in the repo will also be tackled.
 
-This workshop features a movie poster classifier. The code originates from a synergie with another internal project. The model performs a multi-label image classification. 
+This workshop features a hand written digits image classifier. The model that performs this multi-label image classification is kept simple for the sake of focusing on the tool presented. 
 <p align="middle">
-  <img src="https://github.com/laxmimerit/Movies-Poster_Dataset/blob/master/Images/tt0085271.jpg" width="100" />
-  <img src="https://github.com/laxmimerit/Movies-Poster_Dataset/blob/master/Images/tt5022418.jpg" width="100" /> 
-  <img src="https://github.com/laxmimerit/Movies-Poster_Dataset/blob/master/Images/tt4288636.jpg" width="100" />
+  <img src="https://github.com/VisiumCH/dvc-workshop/blob/setup-pipenv/data/sample_images/two.png" width="100" />
+  <img src="https://github.com/VisiumCH/dvc-workshop/blob/setup-pipenv/data/sample_images/five.png" width="100" /> 
+  <img src="https://github.com/VisiumCH/dvc-workshop/blob/setup-pipenv/data/sample_images/nine.png" width="100" />
 </p>
-Checkout the [repository](https://github.com/VisiumCH/image-classification-autotrain) of the project for more information.
 
 
 
@@ -101,9 +100,19 @@ by puting "*" inplace of <version>, you let `pipenv` manage the versions of all 
 
 ### Exercise 
 
-We intentionally left out a fiew dependencies to install, add the following to your environment : 
+We intentionally left out a fiew dependencies to install, add the following to your environment :
+* pathlib
+* dvc-gs
+* keras-preprocessing
+* numpy
+* scikit-image
+* pillow
+* opencv-python
+* typing
+* tensorflow
+* visplotlib
+* iterative-stratification
 
-**TBD List Packages**
 
 
 Finally, looking at the dev section, you might have guessed that thoes packages are here to aid during development. As such, `black`is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 

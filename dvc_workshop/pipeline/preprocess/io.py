@@ -11,8 +11,10 @@ from dvc_workshop.pipeline.preprocess.utils import perform_stratification
 
 def read_images(source_directory: str) -> dict:
     """Simple function to showcase reading data from io.
+
     Args:
         source_directory (str): source iamges directory
+
     Returns:
         dict: dict where the key is the path and the value is the image
     """

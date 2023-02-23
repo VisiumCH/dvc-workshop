@@ -17,10 +17,7 @@ def evaluate_model(
     image_path: str,
     target: str,
 ) -> dict:
-    """Implement the function to evaluate model with test set data.
-
-    As a hint, pay attention as to how data is loaded in training.
-    Make sure to use the arguments bellow.
+    """Evaluate model with test set data.
 
     Args:
         model (tf.keras.Model): trained model

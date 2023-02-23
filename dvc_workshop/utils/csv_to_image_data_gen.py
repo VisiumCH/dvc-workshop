@@ -9,12 +9,15 @@ from params import ModelParams, PreprocessParams, TrainingParams
 
 def csv_to_image_data_gen(file_path: str, paths_columns: str, labels_columns: str) -> ImageDataGenerator():
     """Load csv file from the path with two columns paths_column and labels_column.
+
     Path can be relative or full. If csv contains full path remove "directory" parameter.
     If csv contains just filenames add directory pointing to data directory.
+
     Args:
         file_path (str): path to a csv file with columns
         paths_columns (str): name of column with path
         labels_columns (str): name of column with labels
+
     Returns:
         ImageDataGenerator: DataGenerator with loaded Images and Labels
     """

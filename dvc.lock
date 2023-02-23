@@ -120,8 +120,8 @@ stages:
       size: 1067003
       nfiles: 7
     - path: dvc_workshop/pipeline/plot
-      md5: 2c3935cb716f31bdb3e37c8ee3d4635e.dir
-      size: 3243
+      md5: 10b7e95cd5aca0e3179e62e833f5e7f5.dir
+      size: 3244
       nfiles: 3
     outs:
     - path: data/plot

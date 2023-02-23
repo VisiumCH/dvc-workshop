@@ -10,6 +10,7 @@ from dvc_workshop.pipeline.preprocess.utils import create_path
 
 def save_model(model: tf.keras.Model, save_path: str) -> None:
     """Save model weights for evaluation step.
+
     Args:
         model (tf.keras.Model): model to save
         save_path (str): save path
@@ -22,6 +23,7 @@ def save_model(model: tf.keras.Model, save_path: str) -> None:
 
 def save_history(history: dict, save_path: str, title: str) -> None:
     """Save model history for plot step.
+
     Args:
         history (Dict): _description_
         save_path (str): _description_

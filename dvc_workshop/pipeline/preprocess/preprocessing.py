@@ -65,9 +65,17 @@ def standardize(images: dict, tolerance: float = 1e-5) -> dict:
 
 
 def rotate_and_crop_images(images: dict, angle_interval: tuple[float, float]) -> dict:
-    """Rotate and center crop an image."""
-
     # pylint: disable=no-member
+    """Rotate and center crop an image.
+
+    Args:
+        images (dict): Dictionnary with image path and image array
+        angle_interval (tuple[float, float]): Angle of rotation
+
+    Returns:
+        dict: Path - Image array dictionnary
+    """
+
     def _rotate_image(image: np.array, angle: float) -> np.array:
         """Rotate an image."""
         image_center = tuple(np.array(image.shape[1::-1]) / 2)

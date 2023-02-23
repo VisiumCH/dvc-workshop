@@ -78,11 +78,13 @@ def perform_stratification(
     data_df: pd.DataFrame, test_size: float, valid_size: float, random_state: int
 ) -> tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]):
     """Perform stratification on data frame with labels and paths.
+
     Args:
         data_df (pd.DataFrame): data frame
         test_size (float): test size
         valid_size (float): validation size
         random_state (int): random state
+
     Returns:
         tuple([pd.DataFrame, pd.DataFrame, pd.DataFrame]): train, test, valid
     """
@@ -132,8 +134,10 @@ def perform_stratification(
 
 def create_path(target_directory: str) -> None:
     """Create save paths.
+
     Args:
         target_directory (str): directory path
+
     """
     # check if directory exists
     target_exist = os.path.exists(target_directory)

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from dvc_workshop.pipeline.plot.constants import SAVE_PLOT
-from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY, TUNE_HISTORY
+from dvc_workshop.pipeline.train.constants import SAVE_MODEL, TRAIN_HISTORY
 
 
 def plot_training_history_loss_acc(
@@ -16,6 +16,7 @@ def plot_training_history_loss_acc(
     save_plot: bool = True,
 ) -> None:
     """Plot the training and validation accuracies and losses for a given model.
+
     Args:
         history (dict): Dictionnary output by the model.fit(...) function.
         path_to_save (Path): Where to save the plot.
@@ -51,6 +52,7 @@ def plot_train_and_finetune(
     history_training: pd.DataFrame, history_finetuning: pd.DataFrame, output_folder: Path
 ) -> None:
     """Plot the train and test loss and accuracy cuves during training and finetuning.
+
     Args:
         history_training (pd.DataFrame): training history
         history_finetuning (pd.DataFrame): finetuning history

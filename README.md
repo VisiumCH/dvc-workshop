@@ -12,9 +12,9 @@ DVC architecture in the repo will also be tackled.
 
 This workshop features a movie poster classifier. The code originates from a synergie with another internal project. The model performs a multi-label image classification. 
 <p align="middle">
-  <img src="https://github.com/laxmimerit/Movies-Poster_Dataset/blob/master/Images/tt0085271.jpg" width="100" />
-  <img src="https://github.com/laxmimerit/Movies-Poster_Dataset/blob/master/Images/tt5022418.jpg" width="100" /> 
-  <img src="https://github.com/laxmimerit/Movies-Poster_Dataset/blob/master/Images/tt4288636.jpg" width="100" />
+  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpython-course.eu%2Fmachine-learning%2Ftraining-and-testing-with-mnist.php&psig=AOvVaw1DWjXN98JtoKNJmhvNcB3f&ust=1677230047239000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCTroSnq_0CFQAAAAAdAAAAABAS" width="100" />
+  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpython-course.eu%2Fmachine-learning%2Ftraining-and-testing-with-mnist.php&psig=AOvVaw1DWjXN98JtoKNJmhvNcB3f&ust=1677230047239000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCTroSnq_0CFQAAAAAdAAAAABAJ" width="100" /> 
+  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpython-course.eu%2Fmachine-learning%2Ftraining-and-testing-with-mnist.php&psig=AOvVaw1DWjXN98JtoKNJmhvNcB3f&ust=1677230047239000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCTroSnq_0CFQAAAAAdAAAAABAb" width="100" />
 </p>
 Checkout the [repository](https://github.com/VisiumCH/image-classification-autotrain) of the project for more information.
 
@@ -323,4 +323,29 @@ In this part you are free to set up a plotting step from scratch. No particular 
 
 Remeber to look at existing functions to leverage and to push your results to the remote. 
 
+The resulting pipeline from all the above steps should look like the following: 
 
+<pre>
+     +----------------+        
+     | download_mnist |        
+     +----------------+        
+              *                
+              *                
+              *                
+       +------------+          
+       | preprocess |          
+       +------------+          
+         *        **           
+       **           *          
+      *              **        
++-------+              *       
+| train |*             *       
++-------+ ***          *       
+    *        ***       *       
+    *           ***    *       
+    *              **  *       
++------+         +----------+  
+| plot |         | evaluate |  
++------+         +----------+  
+
+ </pre>

@@ -12,9 +12,9 @@ DVC architecture in the repo will also be tackled.
 
 This workshop features a hand written digits image classifier. The model that performs this multi-label image classification is kept simple for the sake of focusing on the tool presented. 
 <p align="middle">
-  <img src="https://github.com/VisiumCH/dvc-workshop/data/sample_images/two.png" width="100" />
-  <img src="https://github.com/VisiumCH/dvc-workshop/data/sample_images/five.png" width="100" /> 
-  <img src="https://github.com/VisiumCH/dvc-workshop/data/sample_images/nine.png" width="100" />
+  <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/two.png" width="100" />
+  <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/five.png" width="100" /> 
+  <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/nine.png" width="100" />
 </p>
 
 

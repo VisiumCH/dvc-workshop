@@ -7,7 +7,6 @@ from dvc_workshop.pipeline.evaluate.constants import RESULTS_FILE, SAVE_RESULTS
 from dvc_workshop.pipeline.evaluate.io import load_model, save_json
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import SAVE_MODEL
-from dvc_workshop.utils.csv_to_image_data_gen import csv_to_image_data_gen
 from params import ModelParams
 
 

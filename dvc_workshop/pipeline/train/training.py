@@ -19,16 +19,20 @@ def train_model(  # pylint: disable = too-many-arguments, too-many-locals
     target: str,
 ) -> Tuple[tf.keras.Model, dict]:
     """Train multilabel classifier based on images from csv path.
+
     Load csv files as dataframe containg two columns. Train model based on labels and paths
     in the datafram.
     This function returns Tensorflow model and dictionary with test results
+
     Args:
         csv_train_path (str): path to the csv file with train set
         csv_valid_path (str): path to the csv file with validation set
         image_path (str): name of the column with paths to the images in a csv file
         target (str): name of the column with images labels in a csv file
+
     Returns:
         tuple(tf.keras.Model, dict): 2 variables model and a dictionary with performance results
+
     Raises:
         ValueError:  If a model_type that does not exist is used.
     """

@@ -10,6 +10,7 @@ from params import TrainingParams
 class Classifier(tf.keras.Model):
     """Small convolutional model for image classification."""
 
+    # pylint: disable=all
     def __init__(
         self,
         image_height: int,
@@ -17,27 +18,27 @@ class Classifier(tf.keras.Model):
         channels: int,
         activation: str,
         class_indices: dict,
-    ):  # pylint: disable=R0913
-        """Model constructor
+    ):
+        """Model constructor.
+
         Args:
             image_height (int): height of the image
             image_width (int): width of the image
             channels (int): number of input channels
             activation (str): output layer activation
             class_indices (dict): image classes identifiers
-
         Complete the model forward pass to have
-
         - 2 blocks of:
             - 2D convolutional layers size 64 with 3x3 kernel, relu activated
             - Pooling layer (Max) 2x2
         - a 0.5 dropout layer
         - a fully connected layer of 64 units, relu activated
         - a 0.5 dropout
-        - a fully connected layer with as many units as the number of classes and activation fuction recieved in constructor's parameter.
+        - a fully connected layer with:
+            - as many units as the number of classes
+            - activation fuction recieved in constructor's parameter.
         """
         super().__init__()
-
         self.model = Sequential()
         # input layer
         self.model.add(
@@ -81,8 +82,10 @@ class Classifier(tf.keras.Model):
 
     def call(self, inputs: tf.Tensor) -> tf.Tensor:  # pylint: disable=W0221
         """Override call function, forward pass.
+
         Args:
             inputs (tf.Tensor): model input
+
         Returns:
             tf.Tensor: model multilabel prediction
         """

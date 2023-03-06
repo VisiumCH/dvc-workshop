@@ -17,7 +17,7 @@ class Classifier(tf.keras.Model):
         channels: int,
         activation: str,
         class_indices: dict,
-    ):  # pylint: disable=R0913
+    ):
         """Model constructor.
 
         Args:
@@ -27,18 +27,23 @@ class Classifier(tf.keras.Model):
             activation (str): output layer activation
             class_indices (dict): image classes identifiers
 
-        Complete the model forward pass to have
+        The model forward pass has:
 
         - 2 blocks of:
             - 2D convolutional layers size 64 with 3x3 kernel, relu activated
             - Pooling layer (Max) 2x2
         - a 0.5 dropout layer
         - a fully connected layer of 64 units, relu activated
-        - a 0.5 dropout
         - a fully connected layer with:
             - as many units as the number of classes
             - activation fuction recieved in constructor's parameter.
+
+        We have noticed some overfitting and we would like to insert 50% dropout:
+        - At the end of the 2 convolutional blocks
+        - Before the decision layer
+
         """
+        # pylint: disable=all
         super().__init__()
 
         self.model = Sequential()
@@ -56,12 +61,11 @@ class Classifier(tf.keras.Model):
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         self.model.add(Conv2D(64, kernel_size=(3, 3), activation="relu"))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
-        self.model.add(Dropout(0.25))
+        raise NotImplementedError("Insert dropout layer here")
 
         self.model.add(Flatten())
         self.model.add(Dense(64, activation="relu"))
-        self.model.add(Dropout(0.5))
-
+        raise NotImplementedError("Insert dropout layer here")
         # output layer
         self.model.add(Dense(len(class_indices), activation=activation))
         print(f"Current model has {self.model.count_params()} params.")

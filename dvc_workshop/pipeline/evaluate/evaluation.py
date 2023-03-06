@@ -7,7 +7,6 @@ from dvc_workshop.pipeline.evaluate.constants import RESULTS_FILE, SAVE_RESULTS
 from dvc_workshop.pipeline.evaluate.io import load_model, save_json
 from dvc_workshop.pipeline.preprocess.constants import PREPROCESS_DIRECTORY
 from dvc_workshop.pipeline.train.constants import SAVE_MODEL
-from dvc_workshop.utils.csv_to_image_data_gen import csv_to_image_data_gen
 from params import ModelParams
 
 
@@ -29,10 +28,7 @@ def evaluate_model(
         target (str): name of the column with images labels in a csv file
     """
     ############## CODE HERE ##############
-    test = csv_to_image_data_gen(csv_test_path, image_path, target)
-    results_dict = model.evaluate(test, verbose=0, return_dict=True)
-    print(results_dict)
-    return results_dict
+    raise NotImplementedError("Implement evaluation here")
 
 
 def main() -> None:

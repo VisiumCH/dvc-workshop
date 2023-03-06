@@ -47,21 +47,19 @@ def resize_image(images: dict, img_size: tuple[int, int]) -> None:
 
 
 def standardize(images: dict, tolerance: float = 1e-5) -> dict:
-    """Standardize the input images."""
-    # pylint: disable=no-member
+    """Standardize the input images.
+
+    images is a dictionnary, keys being str paths to image and value the image array
+    - Standardize stacked images if the standard deviation is above threshold
+    - if not, substract the mean
+    """
+    # pylint: disable=all
     stacked_images = np.stack(images.values(), axis=0)
     std = stacked_images.std()
     mean = stacked_images.mean()
 
-    if std > tolerance:
-        for image_path, image in tqdm(images.items()):
-            images[image_path] = (image - mean) / std
-    else:
-        logging.warning("Standard deviation too small, we will only substract the mean.")
-        for image_path, image in tqdm(images.items()):
-            images[image_path] = image - mean
-
-    return images
+    ############# CODE HERE #############
+    raise NotImplementedError("Code standardization function here")
 
 
 def rotate_and_crop_images(images: dict, angle_interval: tuple[float, float]) -> dict:

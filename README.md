@@ -3,18 +3,18 @@
 This repository features a code along workshop showcasing Visium's way of using DVC.
 
 By the end of this workshop you will have learned how to : 
-  - set up remote bucket for data versioning with DVC
-  - pull and push data with DVC
-  - set up DVC a pipeline
-  - create DVC stage
+ - set up remote bucket for data versioning with DVC
+ - pull and push data with DVC
+ - set up DVC a pipeline
+ - create DVC stage
 
 DVC architecture in the repo will also be tackled.
 
 This workshop features a hand written digits image classifier. The model that performs this multi-label image classification is kept simple for the sake of focusing on the tool presented. 
 <p align="middle">
-  <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/two.png" width="100" />
-  <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/five.png" width="100" /> 
-  <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/nine.png" width="100" />
+ <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/two.png" width="100" />
+ <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/five.png" width="100" /> 
+ <img src="https://github.com/VisiumCH/dvc-workshop/blob/tuto-complete/data/sample_images/nine.png" width="100" />
 </p>
 
 
@@ -25,7 +25,9 @@ This workshop features a hand written digits image classifier. The model that pe
 
 **Disclaimer** : If you already have Python __3.10__ installed locally you may skip this part. 
 
-This worksop will require you to have a working Python 3.10 installation. In case you don't have any Python instal (highly unlikely...) or other versions installesd, we recommend using (drum roll ...) `pyenv`, to create virtual environment, install and manage different Python versions. 
+This worksop will require you to have a working Python 3.10 installation and is enforced in our environment manager. In case you don't have any Python install (highly unlikely...) or other versions installesd, we recommend using (drum roll ...) `pyenv`, to create virtual environment, install and manage different Python versions. This is a standard used in Visium
+
+In case pyenv installation is too cumbersome, you can always revert the python version of the environment to the one you have locally.
 
 To install this package, follow the [recommendations](https://github.com/pyenv/pyenv) according to your operating system. Though we suggest using the installer by running
 
@@ -96,16 +98,16 @@ or by editing the *Pipfile* with your library:
 <packge_name> = <version>
 ```
 
-by puting "*" inplace of <version>, you let `pipenv` manage the versions of all librabries to avoid confilct dependencies. 
+by putting "*" inplace of ```<version>```, you let `pipenv` manage the versions of all libraries to avoid conflict dependencies. 
 
 ### Exercise 
 
-We intentionally left out a fiew dependencies to install, add the following to your environment : 
+We intentionally left out a tensorflow library to install, add the following to your environment :
 
-**TBD List Packages**
+* tensorflow
 
 
-Finally, looking at the dev section, you might have guessed that thoes packages are here to aid during development. As such, `black`is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 
+Finally, looking at the dev section, you might have guessed that those packages are here to aid during development. As such, `black`is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 
 
 adding the ```--dev``` during the install will allow you to use these libraries. 
 
@@ -115,16 +117,9 @@ To run code under your newly set up environment, you have two options:
 
 - *Open a shell*: activate your environment with `pipenv shell`. Note that this command will also source environment variables from your `.env` file.
 
-- *Pipenv CLI*: you can also run scripts using your python environment with `pipenv run script.py`. This can be convenient within a `docker build` execution for example.
 
+### Pipenv and GitHub
 
-### Some tips about pipenv
-
-**About deploying in production**
-
-Note that when deploying your code in production, you should not install the dev package, it is preferred to run the following command: `pipenv install --system --deploy`.
-
-**About using git with pipenv**
 
 Make sure to commit the `Pipfile.lock` in `git`. It will make your code more reproducible because other developers could install the exact same python packages as you used.
 
@@ -162,7 +157,7 @@ Now, we have set up a Google Storage (gs) Bucket where we store our data and lat
 First step will be to get the data from the first bucket. This wil be the very first step of our DVC pipeline and a good example of how to setup one. 
 
 
-###  A. DVC Pipeline
+### A. DVC Pipeline
 
 DVC Pipelines allows to version control your code and track changes at all times. Pipelines are organized on steps with possible dependencies. As such if a step changes, DVC detects code edits and output changes of that given step and runs the all other dependent steps to reflect the modifications.
 
@@ -177,14 +172,14 @@ Steps have :
 - parameters : usually user defined parameters the step depends on. Here contained in __dvc_workshop/params.py__.
 - command : Python command for dvc to run the step.
 
-With the cookiecutter architecture, steps are pre-defined, and you can adapt them with the appropriate changes directly in the  __dvc.yaml__. DVC detects outputs of each steps and pushes changes to the remote automatically.
+With the cookiecutter architecture, steps are pre-defined, and you can adapt them with the appropriate changes directly in the __dvc.yaml__. DVC detects outputs of each steps and pushes changes to the remote automatically.
 
 To manually create a step, you can use:
 
 ```
 dvc add stage -n <stage name> -d <dependencies> -p <parameters> -o <outputs> cmd
 ```
-
+You can also checkout the file structure in the __Pipefile__ and implement the step manually. 
 
 
 
@@ -226,7 +221,9 @@ To instantiate remote, run:
 ```
 dvc remote add -d <remote-name> gs://<bucket-name>/<folder-name>
 ```
-with `<bucket-name>`being dvc-workshop-cache. You can name the remote as you please but let's agree on calling it dvc-workshop. 
+with `<bucket-name>` being dvc-workshop-cache and `<folder-name>` your SCIPER number. You can name the remote as you please but let's agree on calling it dvc-workshop. 
+
+You can look at the effect of this command in the config file under __.dvc__. 
 
 #### D. Piecing it together: 
 
@@ -274,9 +271,10 @@ Remember to have a look a at the DAG once you have created your pipeline.
 
 In this step, you are going to be implementing and training a small multilabel classification model.
 
-The idea is to understand how DVC handles the execution of the steps as they grow more numerous. 
+The idea is to understand how DVC handles the execution of the steps as they grow more numerous.
 
-For that, your first task will be to complete the forward pass of a simple convoltuional model. You can find the instructions for that in the comment section of ___dvc_workshop/models/classifier.py___. 
+The model implemented has shown some overfitting, and we would like you to add some dropout layers to the mix to mitigate this effect. Head to the model folder
+and checkout the instructions in ___dvc_workshop/models/classifier.py___. 
 
 We have implemented for you the complete training procedure under ___dvc_workshop/pipeline/train/training.py___. 
 
@@ -288,18 +286,18 @@ At the end, your dag should look like the following:
 +----------------+ 
 | download_mnist | 
 +----------------+ 
-         *         
-         *         
-         *         
-  +------------+   
-  | preprocess |   
-  +------------+   
-         *         
-         *         
-         *         
-    +-------+      
-    | train |      
-    +-------+   
+ * 
+ * 
+ * 
+ +------------+ 
+ | preprocess | 
+ +------------+ 
+ * 
+ * 
+ * 
+ +-------+ 
+ | train | 
+ +-------+ 
  </pre>
 
 Don't forget to push the output of this step hashes to the remote. 
@@ -310,7 +308,7 @@ Also, you can play around to better understand DVC's functionning for instance b
 
 ## 4. Evaluation step: 
 
-You should now have successfully trained your classifier and have it saved along with training history. Let's evaluate the model on the test set you generated earlier. 
+You should now have successfully trained your classifier and have it saved along with the training history. Let's evaluate the model on the test set you generated earlier. 
 
 Once again, your job here is to complete the code snipet in __dvc_workshop/pipeline/evaluate.py__ and right down the DVC step accordingly. Make sure to include all dependencies :-). 
 
@@ -318,33 +316,33 @@ Once again, your job here is to complete the code snipet in __dvc_workshop/pipel
 
 ## 5. Plotting step:
 
-In this part you are free to set up a plotting step from scratch. No particular code is provided but your job nonetheless remains the same. That is leverage DVC while respecting the code architecture to implement a new step in the pipeline. Objective for you will plot the __training__ and __tuning__ history. The resulting plots should be saved in the same maner other steps did. 
+In this part you are asked to complete the code for plotting the validation loss and accuracy of the training history. Remember to leverage DVC while respecting the code architecture to implement a new step in the pipeline. The resulting plots should be saved in the same maner other steps did. 
 
 Remeber to look at existing functions to leverage and to push your results to the remote. 
 
 The resulting pipeline from all the above steps should look like the following: 
 
 <pre>
-     +----------------+        
-     | download_mnist |        
-     +----------------+        
-              *                
-              *                
-              *                
-       +------------+          
-       | preprocess |          
-       +------------+          
-         *        **           
-       **           *          
-      *              **        
-+-------+              *       
-| train |*             *       
-+-------+ ***          *       
-    *        ***       *       
-    *           ***    *       
-    *              **  *       
-+------+         +----------+  
-| plot |         | evaluate |  
-+------+         +----------+  
+ +----------------+ 
+ | download_mnist | 
+ +----------------+ 
+ * 
+ * 
+ * 
+ +------------+ 
+ | preprocess | 
+ +------------+ 
+ * ** 
+ ** * 
+ * ** 
++-------+ * 
+| train |* * 
++-------+ *** * 
+ * *** * 
+ * *** * 
+ * ** * 
++------+ +----------+ 
+| plot | | evaluate | 
++------+ +----------+ 
 
  </pre>

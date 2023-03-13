@@ -7,8 +7,8 @@ stages:
     - path: dvc_workshop/utils/generate_mnist_dataset.py
       md5: 0d4720d0ad42b45614ce8c1f3c44bc9d
       size: 1997
-    - path: gs://dvc-workshop-raw/mnist
-      md5: 7905625f8ff28798e70a2fe077ac89af.dir
+    - path: gs://ext-dvc-workshop-raw/mnist
+      md5: 03eaf08c4663aceb455b2123e2972511.dir
       size: 313484
       nfiles: 1001
     outs:

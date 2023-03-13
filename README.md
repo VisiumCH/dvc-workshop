@@ -106,6 +106,9 @@ We intentionally left out a tensorflow library to install, add the following to 
 
 * tensorflow
 
+For Mac OS, install: 
+
+* tensorflow-macos
 
 Finally, looking at the dev section, you might have guessed that those packages are here to aid during development. As such, `black`is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 
 
@@ -150,9 +153,8 @@ That means, implementing a proper DVC step for preprocessing and versionning the
 
 Now, we have set up a Google Storage (gs) Bucket where we store our data and later the different versioned files. As for a client project, two buckets are often created, here : 
 
-* dvc-workshop-raw: keeping safe the original version of the data 
-* dvc-workshop-cache: storing the different file hashes (versions)
-
+* ext-workshop-raw: keeping safe the original version of the data 
+* ext-dvc-workshop-cache: storing the different file hashes (versions) 
 
 First step will be to get the data from the first bucket. This wil be the very first step of our DVC pipeline and a good example of how to setup one. 
 
@@ -191,7 +193,7 @@ The objective of this step will be to excecute this script, store data under __d
 Therefore, we execute the following command to create our first step: 
 
 ```
-dvc stage add -n download_mnist -d gs://dvc-workshop-raw/mnist -d dvc_workshop/utils/generate_mnist_dataset -o data/download_mnist python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path "data/download_mnist/Images" --output-df-path "data/download_mnist"
+dvc stage add -n download_mnist -d gs://ext-dvc-workshop-raw/mnist -d dvc_workshop/utils/generate_mnist_dataset -o data/download_mnist python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path "data/download_mnist/Images" --output-df-path "data/download_mnist"
 
 
 ```
@@ -214,9 +216,15 @@ dvc push
 ```
 are sent to the remote. 
 
-So now that we now why use it, let's set it up :) 
+So now that we now how to use it, let's set it up :) 
 
-To instantiate remote, run: 
+First, we need to authenticate to the Google Cloud Computing service (GCP). For that, we have created for this workshop a service account, with an associate secret key. You will find the key in the slack channel dedicated to the workshop, all you need to do is to store it under `key.json` wherever you please and remeber the path to that file. 
+
+Next, you want to save that path in a the GOOGLE_APPLICATION_CREDENTIALS environment variable by: 
+export GOOGLE_APPLICATION_CREDENTIALS = `<Path_to_key.json>`
+
+
+Finally, you need to instantiate remote runing: 
 
 ```
 dvc remote add -d <remote-name> gs://<bucket-name>/<folder-name>

@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "ext-dvc-workshop-mar23",
+    "private_key_id": "fe97e69cf52e94cbc99a75fa4fed8ce449ace8c3",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCphYjaVSIb6xhX\nghO7ANOCUAggx7uewhVY0DBZuDPH3sQ80ihgqFIt57Er8xyO4yFRojrBwjcElh2J\nnK+0tHQ8Lq8iHeFuJhO5ZxhEaSYSdfUzwUwqRIU6HyCEGh0ScAS+ezB/9PUu3fl0\ni+t5mQHQRn1FUaR4WC8S8wZg7YXgAPqmZuSQqy4dxkoK5tox3INAnOU4n86sZ0lO\nRaFGoXyLyvbUSxtYYGKnkSxoM8P26Oavz6xpGgXLOEio4IgCY+8cmd5A7LyPSntZ\nBB7uitIqYfhmaFlxsikIqoIseGmNlffpXTsuYpzJhj7xra6y+j34ngw/blw5bWht\n5x0rEiEtAgMBAAECggEADClBu5P+6ezQJrr0qmYxRjhylNNvUMDQojnxNgaCZHTF\nNC3JasG4f4WPDr2Wj2OY6M/QEkVaCBCy1sPwUPDfI9AfjT2ChhHiOVs9gO7gJdPj\nfs5/pcqbmiNQhFmRO1jg5j9VJ+DNVArlkehVwLfqyuO7qeTk/SMqYVwg2YRApeSe\nAXvDYByRxvQGgHirmUmn4n0VVQNZE/KK4pxSqNZ7Qs56lI1L801g+dUCyS2hTE/d\nW6rahc2DI5hzfYP2ZGC0Gz1dY/VlzuLHfljZKO2KmoR9XNz0+Jcj3IWgEyMocige\nv+2GWBeCaNlNRqQ4vbl5MhAf/u+crGXj7XyWFdz66wKBgQDpYgDHxP7xUSox8ktS\nTJqiXGlpxOcFfO3laFuZrro3f18Ko6eOKMDdTbGYVKSBKCpb61g17PUJYda2OLDr\nwYFV6HRLY3d7TVOfxOn9KHCmpd00RJ120f5a7dPa+cIL4fR1aTH1JESlA7Bh9L/X\nCgyYIp+UkqpXCDj6WWyYT6eX+wKBgQC58zK+9OUeCIsimvQCaXMloKggGxD2vp5Y\nGec860l3WGT8fw35rHXuwZNQVFVTotIpi0ExPgqij+ZtVPaUCkQQ6qrHvw8QSoIf\nOgWhgApZsEq6a6orXg5U/2Vj7+p4f1vfViU2+kCuG9QrILsE4lW8E7lB5sbtbIZ/\nKDBhYp0a9wKBgAR57bvnKmCkhuOoWwt8Dqc4kIkHzsqLJ+DzjHY5JLc1yTPiCa+v\nVmuoNtTOIs2bYJycufdm0RhZ+Q1LrxEGiB2GtNxRTxRdWlJBK5/Aa9C2c7Sx8Dc8\nNd22nA6iJbemoNKzrtKd3Hcxx+tJD3jnZ3BvkZH+8idzL+yVVIDjXjqLAoGAbmuZ\ndcWtDKGcJaeIQKpnwy9cxvvrneph0wVGyGkbzjACf+He5aVgvq/aj7gUlz63uA3G\nX7xsyk3TUpdCeXSDKNyBH244Pr9P98UXtOh4vPuv1HW8rlYDArxKdAby4C0Y3E2m\nebgvknRaEGY2SFcy/CVmPFkTRcfNMlMmL55Els8CgYEAyPe+A0cWJiRPawI7sbsq\nSdnbduvhP5cyJlfEVQ3bitk5uqKE6KUNcJSjEnBztiFCYzagfWA1PGc3OOQn3d/0\nLJGEGLH3K4hXaY78hczL3YL6vae5QmbNHxri3mBh56MI7fkTEJWAsKLYc0taX+mA\nP9JiS4ZotEeSwY4u8qGkGsg=\n-----END PRIVATE KEY-----\n",
+    "client_email": "dvc-workshop-ext-sharing@ext-dvc-workshop-mar23.iam.gserviceaccount.com",
+    "client_id": "106298711390967987036",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dvc-workshop-ext-sharing%40ext-dvc-workshop-mar23.iam.gserviceaccount.com"
+  }

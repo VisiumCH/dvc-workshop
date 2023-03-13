@@ -1,4 +1,4 @@
 [core]
     remote = dvc-workshop
 ['remote "dvc-workshop"']
-    url = gs://dvc-workshop-cache/273938
+    url = gs://ext-dvc-workshop-cache/273938

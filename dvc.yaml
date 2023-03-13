@@ -1,39 +1,9 @@
 stages:
-  preprocess:
-    cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
+  download_mnist:
+    cmd: python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path data/download_mnist/Images
+      --output-df-path data/download_mnist
     deps:
-    - data/raw
-    - dvc_workshop/pipeline/preprocess
-    params:
-    - dvc_workshop/params.py:
-      - PreprocessParams
+    - dvc_workshop/utils/generate_mnist_dataset.py
+    - gs://ext-dvc-workshop-raw/mnist
     outs:
-    - data/preprocess
-
-  train:
-    cmd: python -m dvc_workshop.pipeline.train.training
-    deps:
-    - data/preprocess
-    - dvc_workshop/pipeline/train
-    params:
-    - dvc_workshop/params.py:
-      - ModelParams
-      - TrainingParams
-    outs:
-    - data/train/
-
-  evaluate:
-    cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
-    deps:
-    - data/preprocess
-    - dvc_workshop/pipeline/evaluate/
-    - data/train
-    outs:
-    - data/evaluate
-  plot:
-    cmd: python -m dvc_workshop.pipeline.plot.ploting
-    deps:
-    - dvc_workshop/pipeline/plot
-    - data/train/train_history.csv
-    outs:
-    - data/plot
+    - data/download_mnist

@@ -6,49 +6,41 @@ name = "pypi"
 [scripts]
 lint = """sh -c "
     echo 'Running black' \
-    && black --check dvc_workshop \
+    && black --check . \
     && echo 'Running isort' \
-    && isort --check --gitignore dvc_workshop \
+    && isort --check --gitignore . \
     && echo 'Running pylint' \
-    && pylint dvc_workshop\
+    && pylint dvc_workshop \
     && echo 'Running pydocstyle' \
-    && pydocstyle dvc_workshop\
+    && pydocstyle dvc_workshop \
     && echo 'Running mypy' \
-    && ! mypy dvc_workshop --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false \
+    && ! mypy dvc_workshop --disallow-untyped-defs --disallow-incomplete-defs | grep 'Function is missing' || false
 "
 """
 
 [packages]
-dvc = "*"
-jupyterlab = "*"
 pandas = "*"
-numexpr = "*"
-bottleneck = "*"
-pathlib = "*"
-gcloud = "*"
-typer = "*"
-dvc-gs = "*"
-keras-preprocessing = "*"
 numpy = "*"
 scikit-image = "*"
 pillow = "*"
 opencv-python = "*"
-typing = "*"
-iterative-stratification = "*"
-tensorflow = "*"
 visplotlib = "*"
-tqdm = "*"
+iterative-stratification = "*"
+dvc = "*"
+jupyterlab = "*"
+numexpr = "*"
+bottleneck = "*"
+typer = "*"
+dvc-gs = "*"
+keras-preprocessing = "*"
 
 [dev-packages]
 black = "*"
-pylint = "*"
 isort = "*"
 pre-commit = "*"
 pydocstyle = "*"
+pylint = "*"
 mypy = "*"
 
 [requires]
-python_version = "3.10.8"
-
-[pipenv]
-allow_prereleases = true
+python_version = "3.10"

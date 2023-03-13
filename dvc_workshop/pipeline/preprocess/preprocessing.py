@@ -5,7 +5,6 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 
-from dvc_workshop.params import ModelParams
 from dvc_workshop.pipeline.preprocess.constants import (
     PREPROCESS_DIRECTORY,
     RAW_DIRECTORY,
@@ -14,6 +13,7 @@ from dvc_workshop.pipeline.preprocess.constants import (
 )
 from dvc_workshop.pipeline.preprocess.io import generate_dataset, read_images, save_images
 from dvc_workshop.pipeline.preprocess.utils import create_path
+from params import PreprocessParams
 
 
 def main() -> None:
@@ -23,11 +23,10 @@ def main() -> None:
     images = read_images(SOURCE_DIRECTORY)
 
     # Resize images
-    images = resize_image(images, img_size=(ModelParams.IMAGE_HEIGHT, ModelParams.IMAGE_WIDTH))
+    images = resize_image(images, img_size=(PreprocessParams.IMAGE_HEIGHT, PreprocessParams.IMAGE_WIDTH))
 
-    # Resize the images
+    # standardize:
     images = standardize(images)
-
     # Rotate and crop the images
     images = rotate_and_crop_images(images, angle_interval=(-5, 5))
 
@@ -48,26 +47,33 @@ def resize_image(images: dict, img_size: tuple[int, int]) -> None:
 
 
 def standardize(images: dict, tolerance: float = 1e-5) -> dict:
-    """Standardize the input images."""
-    # pylint: disable=no-member
+    """Standardize the input images.
+
+    images is a dictionnary, keys being str paths to image and value the image array
+    - Standardize stacked images if the standard deviation is above threshold
+    - if not, substract the mean
+    """
+    # pylint: disable=all
     stacked_images = np.stack(images.values(), axis=0)
     std = stacked_images.std()
     mean = stacked_images.mean()
 
-    if std > tolerance:
-        for image_path, image in tqdm(images.items()):
-            images[image_path] = (image - mean) / std
-    else:
-        logging.warning("Standard deviation too small, we will only substract the mean.")
-        for image_path, image in tqdm(images.items()):
-            images[image_path] = image - mean
-
-    return images
+    ############# CODE HERE #############
+    raise NotImplementedError("Code standardization function here")
 
 
 def rotate_and_crop_images(images: dict, angle_interval: tuple[float, float]) -> dict:
-    """Rotate and center crop an image."""
     # pylint: disable=no-member
+    """Rotate and center crop an image.
+
+    Args:
+        images (dict): Dictionnary with image path and image array
+        angle_interval (tuple[float, float]): Angle of rotation
+
+    Returns:
+        dict: Path - Image array dictionnary
+    """
+
     def _rotate_image(image: np.array, angle: float) -> np.array:
         """Rotate an image."""
         image_center = tuple(np.array(image.shape[1::-1]) / 2)

@@ -1,18 +1,34 @@
 schema: '2.0'
 stages:
+  download_mnist:
+    cmd: python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path data/download_mnist/Images
+      --output-df-path data/download_mnist
+    deps:
+    - path: dvc_workshop/utils/generate_mnist_dataset.py
+      md5: 0d4720d0ad42b45614ce8c1f3c44bc9d
+      size: 1997
+    - path: gs://ext-dvc-workshop-raw/mnist
+      md5: 03eaf08c4663aceb455b2123e2972511.dir
+      size: 313484
+      nfiles: 1001
+    outs:
+    - path: data/download_mnist
+      md5: c98421933dce5e8bd752c71ab177e9ea.dir
+      size: 324484
+      nfiles: 1001
   preprocess:
     cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
     deps:
-    - path: data/raw
-      md5: 0641ad08acb35ebe3040a4d3810f4859.dir
-      size: 313484
+    - path: data/download_mnist
+      md5: c98421933dce5e8bd752c71ab177e9ea.dir
+      size: 324484
       nfiles: 1001
-    - path: dvc_workshop/pipeline/preprocess
-      md5: 5a64b47658e1050f6e9d54f74c9c29d3.dir
-      size: 22605
-      nfiles: 10
+    - path: dvc_workshop/pipeline/preprocess/
+      md5: a04de5ef5237d86966b5ab82077f18de.dir
+      size: 11511
+      nfiles: 5
     params:
-      dvc_workshop/params.py:
+      params.py:
         PreprocessParams:
           LOWER_BOUND_COLOR:
           - 0
@@ -23,77 +39,92 @@ stages:
           - 0
           - 255
           THRESHOLD: 0.005
+          IMAGE_HEIGHT: 28
+          IMAGE_WIDTH: 28
     outs:
     - path: data/preprocess
-      md5: 2096055ec8d7ee43fac203a64d66dfc3.dir
-      size: 330251
+      md5: baf5c5caf34fcd89695dcb1d3937dc83.dir
+      size: 330531
       nfiles: 1003
   train:
     cmd: python -m dvc_workshop.pipeline.train.training
     deps:
     - path: data/preprocess
-      md5: 2096055ec8d7ee43fac203a64d66dfc3.dir
-      size: 330251
+      md5: baf5c5caf34fcd89695dcb1d3937dc83.dir
+      size: 330531
       nfiles: 1003
     - path: dvc_workshop/pipeline/train
-      md5: 654da87c192a2ce4b8494bae3c858b0a.dir
-      size: 10536
-      nfiles: 8
+      md5: 8a08a3ce7bed0d5c92d0297d7fd6d758.dir
+      size: 3943
+      nfiles: 4
     params:
-      dvc_workshop/params.py:
+      params.py:
         ModelParams:
-          IMAGE_HEIGHT: 28
-          IMAGE_WIDTH: 28
+          MODEL_NAME: classifier
           COLOR_TYPE: grayscale
           NUMBER_CHANNELS: 1
           POOLING: max
           ACTIVATION: softmax
           TOP: false
-        TrainingParams:
-          BACTH_SIZE: 32
-          SEED: 42
-          TRAINING_EPOCHS: 30
-          TRAINING_LR: 0.001
-          TUNING_EPOCHS: 1
-          TUNING_LR: 1e-05
-          PATIENCE: 5
+        PreprocessParams:
+          LOWER_BOUND_COLOR:
+          - 0
+          - 0
+          - 200
+          UPPER_BOUND_COLOR:
+          - 0
+          - 0
+          - 255
+          THRESHOLD: 0.005
+          IMAGE_HEIGHT: 28
+          IMAGE_WIDTH: 28
     outs:
-    - path: data/train/
-      md5: 41ea84b4913c7b51a424913d3dffbd70.dir
-      size: 1064251
+    - path: data/train
+      md5: b9278087c71db701f28a160a03cfeba4.dir
+      size: 1067003
       nfiles: 7
   evaluate:
     cmd: python -m dvc_workshop.pipeline.evaluate.evaluation
     deps:
-    - path: data/preprocess
-      md5: 2096055ec8d7ee43fac203a64d66dfc3.dir
-      size: 330251
+    - path: data/preprocess/
+      md5: baf5c5caf34fcd89695dcb1d3937dc83.dir
+      size: 330531
       nfiles: 1003
     - path: data/train
-      md5: 41ea84b4913c7b51a424913d3dffbd70.dir
-      size: 1064251
+      md5: b9278087c71db701f28a160a03cfeba4.dir
+      size: 1067003
       nfiles: 7
     - path: dvc_workshop/pipeline/evaluate/
-      md5: e2dd5c834060f042328fa4543cde4048.dir
-      size: 4126
-      nfiles: 8
+      md5: 1e0c6fdf3783e29f93f1947e58564deb.dir
+      size: 2522
+      nfiles: 4
+    params:
+      params.py:
+        ModelParams:
+          MODEL_NAME: classifier
+          COLOR_TYPE: grayscale
+          NUMBER_CHANNELS: 1
+          POOLING: max
+          ACTIVATION: softmax
+          TOP: false
     outs:
     - path: data/evaluate
-      md5: ea924c053f0b7395e51d215695c0e1ce.dir
+      md5: ee3672b697a2b3f43d60e4343c560b6f.dir
       size: 186
       nfiles: 1
   plot:
-    cmd: python -m dvc_workshop.pipeline.plot.ploting
+    cmd: python -m dvc_workshop.pipeline.plot.plotting
     deps:
-    - path: data/train/train_history.csv
-      md5: e673cd4f7f6c7e3d2c84bf137e209ac7
-      size: 4427
-    - path: dvc_workshop/pipeline/plot
-      md5: 09f56012aa00e7fbfcdc2053e68ddcf0.dir
-      size: 8029
+    - path: data/train
+      md5: b9278087c71db701f28a160a03cfeba4.dir
+      size: 1067003
       nfiles: 7
+    - path: dvc_workshop/pipeline/plot
+      md5: 10b7e95cd5aca0e3179e62e833f5e7f5.dir
+      size: 3244
+      nfiles: 3
     outs:
     - path: data/plot
-      md5: 40fd5304491d284dc5d39f0b5f856177.dir
-      size: 214653
+      md5: 4e91723c1c90884fee3476501379bc51.dir
+      size: 222069
       nfiles: 1

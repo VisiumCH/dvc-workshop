@@ -14,7 +14,7 @@ def load_model(save_path: str) -> tf.keras.Model:
 
 
 def save_json(data: Dict, save_path: str, file_name: str) -> None:
-    """Save a dictomary to a json file."""
+    """Save a dictonary to a json file."""
     create_path(save_path)
     with open(os.path.join(save_path, file_name), "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)

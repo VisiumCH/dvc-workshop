@@ -1,6 +1,5 @@
-/raw
-/preprocessed
+/download_mnist
 /preprocess
+/train
 /evaluate
 /plot
-/train

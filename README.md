@@ -110,7 +110,7 @@ For Mac OS, install:
 
 * tensorflow-macos
 
-Finally, looking at the dev section, you might have guessed that those packages are here to aid during development. As such, `black`is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 
+Finally, looking at the dev section, you might have guessed that those packages are here to aid during development. As such, `black` is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc... 
 
 adding the ```--dev``` during the install will allow you to use these libraries. 
 
@@ -331,26 +331,25 @@ Remeber to look at existing functions to leverage and to push your results to th
 The resulting pipeline from all the above steps should look like the following: 
 
 <pre>
- +----------------+ 
- | download_mnist | 
- +----------------+ 
- * 
- * 
- * 
- +------------+ 
- | preprocess | 
- +------------+ 
- * ** 
- ** * 
- * ** 
-+-------+ * 
-| train |* * 
-+-------+ *** * 
- * *** * 
- * *** * 
- * ** * 
-+------+ +----------+ 
-| plot | | evaluate | 
-+------+ +----------+ 
-
+     +----------------+        
+     | download_mnist |        
+     +----------------+        
+              *                
+              *                
+              *                
+       +------------+          
+       | preprocess |          
+       +------------+          
+         *        **           
+       **           *          
+      *              **        
++-------+              *       
+| train |*             *       
++-------+ ***          *       
+    *        ***       *       
+    *           ***    *       
+    *              **  *       
++------+         +----------+  
+| plot |         | evaluate |  
++------+         +----------+  
  </pre>

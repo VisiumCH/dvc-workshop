@@ -220,9 +220,12 @@ So now that we now how to use it, let's set it up :)
 
 First, we need to authenticate to the Google Cloud Computing service (GCP). For that, we have created for this workshop a service account, with an associate secret key. You will find the key in the slack channel dedicated to the workshop, all you need to do is to store it under `key.json` wherever you please and remeber the path to that file. 
 
-Next, you want to save that path in a the GOOGLE_APPLICATION_CREDENTIALS environment variable by: 
+Next, you want to save that path in a the GOOGLE_APPLICATION_CREDENTIALS environment variable by running: 
+
+```
 export GOOGLE_APPLICATION_CREDENTIALS = `<Path_to_key.json>`
 
+```
 
 Finally, you need to instantiate remote runing: 
 

@@ -2,7 +2,7 @@
 
 This repository features a code along workshop showcasing Visium's way of using DVC.
 
-By the end of this workshop you will have learned how to : 
+By the end of this workshop you will have learned how to: 
  - set up remote bucket for data versioning with DVC
  - pull and push data with DVC
  - set up DVC a pipeline
@@ -21,7 +21,7 @@ This workshop features a hand written digits image classifier. The model that pe
 
 ## 1. Getting started : Environment
 
-### Set up python environment
+### Install python 3.10
 
 **Disclaimer** : If you already have Python __3.10__ installed locally you may skip this part. 
 

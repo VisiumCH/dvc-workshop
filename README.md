@@ -161,7 +161,7 @@ First step will be to get the data from the first bucket. This wil be the very f
 
 ### A. DVC Pipeline
 
-DVC Pipelines allows to version control your code and track changes at all times. Pipelines are organized on steps with possible dependencies. As such if a step changes, DVC detects code edits and output changes of that given step and runs the all other dependent steps to reflect the modifications.
+DVC Pipelines allows to version control your code and track changes at all times. Pipelines are organized on steps with possible dependencies. As such if a step changes, DVC detects code edits and output changes of that given step and runs all other dependent steps to reflect the modifications.
 
 On the opposite, if a change in a given step has no incidence on other upstream ones, DVC will not re-run the complete pipeline all-over.
 
@@ -182,6 +182,8 @@ To manually create a step, you can use:
 dvc add stage -n <stage name> -d <dependencies> -p <parameters> -o <outputs> cmd
 ```
 You can also checkout the file structure in the __Pipefile__ and implement the step manually. 
+```
+You can also checkout the file structure in the __Pipefile__ and implement the step manually. (#TODO REVIEW: do you mean dvc.lock?)
 
 
 
@@ -197,6 +199,8 @@ dvc stage add -n download_mnist -d gs://ext-dvc-workshop-raw/mnist -d dvc_worksh
 
 
 ```
+(#TODO REVIEW: getting an ERROR: Stage 'download_mnist' already exists in 'dvc.yaml'. Use '--force' to overwrite.
+Corrected with: dvc stage add --force -n download_mnist -d gs://ext-dvc-workshop-raw/mnist -d dvc_workshop/utils/generate_mnist_dataset -o data/download_mnist python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path "data/download_mnist/Images" --output-df-path "data/download_mnist")
 
 You can lookup for yourself the result of this command by opening up the __dvc.yaml__ and spotting the changes... 
 
@@ -218,6 +222,7 @@ are sent to the remote.
 
 So now that we now how to use it, let's set it up :) 
 
+(#TODO REVIEW: these instructions below should be before previous command (dvc stage add) because you need the key there)
 First, we need to authenticate to the Google Cloud Computing service (GCP). For that, we have created for this workshop a service account, with an associate secret key. You will find the key in the slack channel dedicated to the workshop, all you need to do is to store it under `key.json` wherever you please and remeber the path to that file. 
 
 Next, you want to save that path in a the GOOGLE_APPLICATION_CREDENTIALS environment variable by: 

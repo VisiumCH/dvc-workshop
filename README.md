@@ -24,11 +24,13 @@ This workshop features a handwritten digits image classifier. The model that per
 
 
 
+<details>
+<summary><h1>1. Getting started : Environment</h1></summary>
+Test
+</details>
 
 
-
-## 1. Getting started : Environment
-
+## 
 
 ### Set up python environment
 
@@ -47,8 +49,6 @@ To install this package, follow the [recommendations](https://github.com/pyenv/p
 
 ```
 curl https://pyenv.run | bash
-
-
 ```
 
 
@@ -57,8 +57,6 @@ Then, you can list all Python 3.10 releases available for install by running:
 
 ```
 pyenv install --list | grep " 3.10"
-
-
 ```
 
 
@@ -67,7 +65,6 @@ and pick one to install running:
 
 ```
 pyenv install <version>
-
 
 ```
 
@@ -482,3 +479,6 @@ The resulting pipeline from all the above steps should look like the following:
 | plot |         | evaluate | 
 +------+         +----------+ 
 </pre>
+
+
+  

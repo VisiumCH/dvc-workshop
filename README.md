@@ -150,16 +150,14 @@ by putting "*" in place of ```<version>```, you let `pipenv` manage the versions
 
 ### Set up the environment - Google Cloud Plateform Credentials
 
-During this workshop, we are going to be using storage services of Google Cloud Platform (GCP). To that end, we have created a service account, with an associate secret key. You will be using this service account to authenticate to GCP. You will find the key in the slack channel dedicated to the workshop. Store the key in a `json` file under the path `./google_credentials.json`.
+During this workshop, we are going to be using storage services of Google Cloud Platform (GCP). To that end, we have created a service account, with an associate secret key. You will be using this service account to authenticate to GCP. You will find the key in the slack channel dedicated to the workshop. Store the key in a `json` file under the path `./.google_credentials.json`.
 
 Next, we are going to store the path in the environment variable in a .env file. If it is not already there, create a .env file and write:
 
 ```
-export GOOGLE_APPLICATION_CREDENTIALS = `<Path_to_key.json>`
+export GOOGLE_APPLICATION_CREDENTIALS=./.google_credentials.json
 ```
 
-
-`<Path_to_key.json>` being the path to the secret key of the service account.
 
 
 That way, upon environment creation with pipenv, the variable will be set properly and you will be able to communicate with the google cloud storage bucket.

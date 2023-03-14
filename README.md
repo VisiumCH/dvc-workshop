@@ -30,13 +30,13 @@ This workshop features a handwritten digits image classifier. The model that per
 ## 1. Getting started : Environment
 
 
-### Set up python environment
+### Install python 3.10 with pyenv
 
 
 **Disclaimer** : If you already have Python __3.10__ installed locally you may skip this part.
 
 
-This workshop will require you to have a working Python 3.10 installation and is enforced in our environment manager. In case you don't have any Python install (highly unlikely...) or other versions installed, we recommend using (drum roll ...) `pyenv`, to create a virtual environment, install and manage different Python versions. This is a standard used in Visium
+This workshop will require you to have a working Python 3.10 installation and is enforced in our environment manager. In case you don't have any Python install (highly unlikely...) or other versions installed, we recommend using (drum roll ...) `pyenv`, to create a virtual environment, install and manage different Python versions. This is a standard used in Visium.
 
 
 In case pyenv installation is too cumbersome, you can always revert the python version of the environment to the one you have locally.
@@ -45,45 +45,39 @@ In case pyenv installation is too cumbersome, you can always revert the python v
 To install this package, follow the [recommendations](https://github.com/pyenv/pyenv) according to your operating system. Though we suggest using the installer by running
 
 
-```
+```bash
 curl https://pyenv.run | bash
-
-
 ```
 
 
 Then, you can list all Python 3.10 releases available for install by running:
 
 
-```
+```bash
 pyenv install --list | grep " 3.10"
-
-
 ```
 
 
 and pick one to install running:
 
 
-```
+```bash
 pyenv install <version>
-
-
 ```
 
 
 and set it as default Python version:
 
 
-```
+```bash
 pyenv global <version>
 ```
 
 
-you can check at all times which versions are installed locally and which one is used with :
+you can check at all times which versions are installed locally and which one is used with:
 
 
-```
+```bash
 pyenv versions
 ```
 
@@ -93,7 +87,7 @@ pyenv versions
 ## Manage your python environment
 
 
-### Requirements:
+### Install pipenv
 
 
 
@@ -137,25 +131,22 @@ or by editing the *Pipfile* with your library:
 by putting "*" in place of ```<version>```, you let `pipenv` manage the versions of all libraries to avoid conflict dependencies.
 
 
-#### Exercise
-
-
-We intentionally left out a tensorflow library to install, add the following to your environment :
-
-
-* tensorflow
-
-
-For Mac OS, install:
-
-
-* tensorflow-macos
-
-
-Finally, looking at the dev section, you might have guessed that those packages are here to aid during development. As such, `black` is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc...
-
-
-adding the ```--dev``` during the install will allow you to use these libraries.
+>#### 📓 Exercise
+>
+>We intentionally left out a tensorflow library to install, add the following to your environment :
+>
+>* tensorflow
+>
+>For Mac OS, install:
+>
+>
+>* tensorflow-macos
+>
+>
+>Finally, looking at the dev section, you might have guessed that those packages are here to aid during development. As such, `black` is a python code formatter, `isort` to order the imports, `pre-commit`to ensure no code is pushed with formating etc...
+>
+>
+>adding the ```--dev``` during the install will allow you to use these libraries.
 
 ### Set up the environment - Google Computing Service Plateform Credentials
 

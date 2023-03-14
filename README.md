@@ -148,17 +148,11 @@ by putting "*" in place of ```<version>```, you let `pipenv` manage the versions
 >
 >adding the ```--dev``` during the install will allow you to use these libraries.
 
-### Set up the environment - Google Computing Service Plateform Credentials
+### Set up the environment - Google Cloud Plateform Credentials
 
-During this workshop, we are going to be using storage services of Google Computing Service Platform (GCP). To that end, we have created for this workshop a service account, with an associate secret key. You will be using this service account to authenticate to GCP. You will find the key in the slack channel dedicated to the workshop. Store the key in a `json` file under `key.json`, and record the path to that file.
-
-
-
+During this workshop, we are going to be using storage services of Google Cloud Platform (GCP). To that end, we have created a service account, with an associate secret key. You will be using this service account to authenticate to GCP. You will find the key in the slack channel dedicated to the workshop. Store the key in a `json` file under the path `./google_credentials.json`.
 
 Next, we are going to store the path in the environment variable in a .env file. If it is not already there, create a .env file and write:
-
-
-
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS = `<Path_to_key.json>`

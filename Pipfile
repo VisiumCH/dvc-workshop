@@ -33,6 +33,7 @@ bottleneck = "*"
 typer = "*"
 dvc-gs = "*"
 keras-preprocessing = "*"
+tensorflow-macos = "*"
 
 [dev-packages]
 black = "*"

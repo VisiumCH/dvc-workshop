@@ -1,5 +1,5 @@
-/download_mnist
 /preprocess
 /train
 /evaluate
 /plot
+/download_mnist

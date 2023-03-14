@@ -166,13 +166,16 @@ That way, upon environment creation with pipenv, the variable will be set proper
 
 
 
-### Activate and use your environment
+### Activate and use the pipenv environment
 
 
-To run code under your newly set up environment, you have two options:
+To run code under your newly set up environment, activate it with 
 
+```bash
+pipenv shell
+```
 
-- *Open a shell*: activate your environment with `pipenv shell`. Note that this command will also source environment variables from your `.env` file.
+Note that this command will also source environment variables from your `.env` file.
 
 
 
@@ -285,7 +288,7 @@ You can look up for yourself the result of this command by opening up the __dvc.
 #### C. Remote Bucket
 
 
-Now, the second step before going right into the preprocessing is setting up a "remote" for DVC. By specifying a remote, we instruct DVC the locations where to store file versions. When tracking a new file (by specifying it as a dependence in step as seen above for example), DVC comptes a hash of that file to fix its state. Later on, we would like to store all computed hashes in a remote location, other than your local cache, and more importantly shared. That way, if many developers work on the same project, that can all get access to the latest versions of the codes, models, data ... (without computing them!)
+Now, the second step before going right into the preprocessing is setting up a "remote" for DVC. By specifying a remote, we instruct DVC the locations where to store file versions. When tracking a new file (by specifying it as a dependence in step as seen above for example), DVC computes a hash of that file to fix its state. Later on, we would like to store all computed hashes in a remote location, other than your local cache, and more importantly shared. That way, if many developers work on the same project, that can all get access to the latest versions of the codes, models, data ... (without computing them!)
 
 
 This is where the second gs bucket comes in handy. For instance, upon downloading the raw mnist data, we would like to version this data in case it gets corrupted in the future, we can always back track to it. You can think of it as a git repository, as a matter of fact, DVC is built on top of git, so a lot of the commands are similar. As such, when adding files to be tracked using

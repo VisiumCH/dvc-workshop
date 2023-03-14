@@ -26,12 +26,11 @@ This workshop features a handwritten digits image classifier. The model that per
 
 <details>
 <summary><h1>1. Getting started : Environment</h1></summary>
-Test
+### Set up python environment
 </details>
 
 
 
-### Set up python environment
 
 
 **Disclaimer** : If you already have Python __3.10__ installed locally you may skip this part.

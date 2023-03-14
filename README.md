@@ -125,7 +125,7 @@ or by editing the *Pipfile* with your library:
 
 
 ```
-<packge_name> = <version>
+<package_name> = <version>
 ```
 
 by putting "*" in place of ```<version>```, you let `pipenv` manage the versions of all libraries to avoid conflict dependencies.
@@ -263,7 +263,7 @@ To manually create a step, you can use:
 ```
 dvc add stage -n <stage name> -d <dependencies> -p <parameters> -o <outputs> cmd
 ```
-You can also checkout the file structure in the __Pipefile__ and implement the step manually.
+You can also checkout the file structure in the __Pipfile__ and implement the step manually.
 
 
 
@@ -403,18 +403,18 @@ At the end, your dag should look like the following:
 +----------------+
 | download_mnist |
 +----------------+
-*
-*
-*
-+------------+
-| preprocess |
-+------------+
-*
-*
-*
-+-------+
-| train |
-+-------+
+        *
+        *
+        *
+  +------------+
+  | preprocess |
+  +------------+
+        *
+        *
+        *
+    +-------+
+    | train |
+    +-------+
 </pre>
 
 

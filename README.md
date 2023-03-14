@@ -193,8 +193,7 @@ The objective of this step will be to excecute this script, store data under __d
 Therefore, we execute the following command to create our first step: 
 
 ```
-dvc stage add -n download_mnist -d gs://ext-dvc-workshop-raw/mnist -d dvc_workshop/utils/generate_mnist_dataset -o data/download_mnist python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path "data/download_mnist/Images" --output-df-path "data/download_mnist"
-
+dvc stage add -n download_mnist -d gs://ext-dvc-workshop-raw/mnist -d dvc_workshop/utils/generate_mnist_dataset.py -o data/download_mnist python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path "data/download_mnist/Images" --output-df-path "data/download_mnist"
 
 ```
 
@@ -224,7 +223,6 @@ Next, you want to save that path in a the GOOGLE_APPLICATION_CREDENTIALS environ
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS = `<Path_to_key.json>`
-
 ```
 
 Finally, you need to instantiate remote runing: 

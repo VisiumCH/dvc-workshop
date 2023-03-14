@@ -1,21 +1,5 @@
 schema: '2.0'
 stages:
-  download_mnist:
-    cmd: python -m dvc_workshop.utils.generate_mnist_dataset --output-image-path data/download_mnist/Images
-      --output-df-path data/download_mnist
-    deps:
-    - path: dvc_workshop/utils/generate_mnist_dataset.py
-      md5: 0d4720d0ad42b45614ce8c1f3c44bc9d
-      size: 1997
-    - path: gs://ext-dvc-workshop-raw/mnist
-      md5: 03eaf08c4663aceb455b2123e2972511.dir
-      size: 313484
-      nfiles: 1001
-    outs:
-    - path: data/download_mnist
-      md5: c98421933dce5e8bd752c71ab177e9ea.dir
-      size: 324484
-      nfiles: 1001
   preprocess:
     cmd: python -m dvc_workshop.pipeline.preprocess.preprocessing
     deps:

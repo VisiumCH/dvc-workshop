@@ -1,4 +1,0 @@
-[core]
-    remote = dvc-workshop
-['remote "dvc-workshop"']
-    url = gs://ext-dvc-workshop-cache/273938

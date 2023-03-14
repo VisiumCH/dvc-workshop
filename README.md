@@ -24,10 +24,10 @@ This workshop features a handwritten digits image classifier. The model that per
 
 
 
+<details>
+<summary><h2>1. Getting started : Environment</h2></summary>
 
 
-
-## 1. Getting started : Environment
 
 
 ### Install python 3.10 with pyenv
@@ -192,8 +192,11 @@ Make sure to commit the `Pipfile.lock` in `git`. It will make your code more rep
 ---
 
 
-## 2. Preprocess step:
+</details>
 
+<details>
+
+<summary><h2>2. Preprocess step:</h2></summary>
 
 Now that we have properly set the environment, let's get in the nitty gritty of this workshop.
 
@@ -376,9 +379,11 @@ Remember to have a look at the DAG once you have created your pipeline.
 
 ---
 
+</details>
 
-## 3. Training step:
 
+<details>
+<summary><h2>3. Training step:</h2></summary>
 
 In this step, you are going to be implementing and training a small multilabel classification model.
 
@@ -425,10 +430,11 @@ Also, you can play around to better understand DVC's functioning for instance by
 
 
 ---
+</details>
 
-
-## 4. Evaluation step:
-
+ 
+<details>
+<summary><h2>4. Evaluation step:</h2></summary>
 
 You should now have successfully trained your classifier and have it saved along with the training history. Let's evaluate the model on the test set you generated earlier.
 
@@ -438,9 +444,12 @@ Once again, your job here is to complete the code snippet in __dvc_workshop/pipe
 
 ---
 
+</details>
 
-## 5. Plotting step:
 
+
+<details>
+<summary><h2>5. Plotting step:</h2></summary>
 
 In this part you are asked to complete the code for plotting the validation loss and accuracy of the training history. Remember to leverage DVC while respecting the code architecture to implement a new step in the pipeline. The resulting plots should be saved in the same manner other steps did.
 
@@ -473,3 +482,9 @@ The resulting pipeline from all the above steps should look like the following:
 | plot |         | evaluate | 
 +------+         +----------+ 
 </pre>
+
+
+</details>
+
+
+

@@ -1,0 +1,2 @@
+['remote "remote_workshop"']
+    url = gs://dvc-workshop-cache/ar

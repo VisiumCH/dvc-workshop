@@ -154,8 +154,8 @@ During this workshop, we are going to be using storage services of Google Cloud 
 
 Next, we are going to store the path in the environment variable in a .env file. If it is not already there, create a .env file and write:
 
-```
-export GOOGLE_APPLICATION_CREDENTIALS=./.google_credentials.json
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="./.google_credentials.json"
 ```
 
 
